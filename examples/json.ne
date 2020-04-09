@@ -52,7 +52,7 @@ $extractObject = function ($d) use ($extractPair) {
     $extractPair($d[2], $output);
 
     foreach ($d[3] as $i) {
-        $extractPair($d[3][$i][3], $output);
+        $extractPair($i[3], $output);
     }
 
     return $output;
@@ -62,7 +62,7 @@ $extractArray = function ($d) {
     $output = [$d[2]];
 
     foreach ($d[3] as $i) {
-        $output[] = $d[3][$i][3];
+        $output[] = $i[3];
     }
 
     return $output;
