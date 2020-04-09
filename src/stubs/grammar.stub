@@ -1,0 +1,27 @@
+<?php
+
+namespace {{ DummyNamespace }};
+
+use JPNut\Pearley\Parser\Grammar;
+use JPNut\Pearley\Parser\Symbol;
+{{ GrammarUse }}
+
+/**
+ * Class {{ DummyClass }}
+ *
+ * Generated automatically by pearley
+ * https://github.com/jpnut/pearley
+ */
+class {{ DummyClass }}
+{
+    public static function grammar(): Grammar
+    {
+        $id = fn($x) => $x[0];
+
+        {{ GrammarBody }}
+
+        return new Grammar([
+            {{ GrammarRules }}
+        ], '{{ GrammarStart }}'{{ GrammarLexer }});
+    }
+}
