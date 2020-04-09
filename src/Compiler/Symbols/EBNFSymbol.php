@@ -33,18 +33,19 @@ class EBNFSymbol implements Symbol, HasRules
     protected ?string $serialized;
 
     /**
-     * @param  string  $modifier
-     * @param  \JPNut\Pearley\Compiler\Contracts\Symbol  $symbol
+     * @param string                                   $modifier
+     * @param \JPNut\Pearley\Compiler\Contracts\Symbol $symbol
      */
     public function __construct(string $modifier, Symbol $symbol)
     {
         $this->modifier = $modifier;
-        $this->symbol   = $symbol;
+        $this->symbol = $symbol;
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     public function serialize(CompileRule $rule, CompileResult $result): ?string
@@ -67,8 +68,9 @@ class EBNFSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function generateCompileRules(CompileRule $rule, CompileResult $result): array
@@ -90,17 +92,18 @@ class EBNFSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return \JPNut\Pearley\Compiler\LanguageRule[]
      */
     protected function buildLanguageRules(string $name): array
     {
         switch ($this->modifier) {
-            case ":+":
+            case ':+':
                 return $this->buildEBNFPlus($name);
-            case ":*":
+            case ':*':
                 return $this->buildEBNFStar($name);
-            case ":?":
+            case ':?':
                 return $this->buildEBNFOpt($name);
         }
 
@@ -108,7 +111,8 @@ class EBNFSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return \JPNut\Pearley\Compiler\LanguageRule[]
      */
     protected function buildEBNFPlus(string $name): array
@@ -121,12 +125,13 @@ class EBNFSymbol implements Symbol, HasRules
             new LanguageRule(
                 [new StringSymbol($name), $this->symbol],
                 PostProcessor::builtin(PostProcessor::ARRPUSH),
-            )
+            ),
         ];
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return \JPNut\Pearley\Compiler\LanguageRule[]
      */
     protected function buildEBNFStar(string $name): array
@@ -139,12 +144,13 @@ class EBNFSymbol implements Symbol, HasRules
             new LanguageRule(
                 [new StringSymbol($name), $this->symbol],
                 PostProcessor::builtin(PostProcessor::ARRPUSH),
-            )
+            ),
         ];
     }
 
     /**
      * @param $name
+     *
      * @return \JPNut\Pearley\Compiler\LanguageRule[]
      */
     protected function buildEBNFOpt($name): array
@@ -157,7 +163,7 @@ class EBNFSymbol implements Symbol, HasRules
             new LanguageRule(
                 [],
                 PostProcessor::builtin(PostProcessor::NULLER),
-            )
+            ),
         ];
     }
 }

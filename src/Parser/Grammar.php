@@ -29,9 +29,9 @@ class Grammar
     protected ?LexerContract $lexer;
 
     /**
-     * @param  array  $rules
-     * @param  string|null  $start
-     * @param  \JPNut\Pearley\Parser\Contracts\Lexer  $lexer
+     * @param array                                 $rules
+     * @param string|null                           $start
+     * @param \JPNut\Pearley\Parser\Contracts\Lexer $lexer
      */
     public function __construct(array $rules, ?string $start = null, ?LexerContract $lexer = null)
     {
@@ -67,7 +67,8 @@ class Grammar
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return \JPNut\Pearley\Parser\Rule[]
      */
     public function getRulesByName(string $name): array
@@ -76,16 +77,18 @@ class Grammar
     }
 
     /**
-     * @param  array  $rules
+     * @param array $rules
+     *
      * @return array
      */
     protected function parseRules(array $rules): array
     {
-        return array_map(fn($rule) => $this->createRule($rule), $rules);
+        return array_map(fn ($rule) => $this->createRule($rule), $rules);
     }
 
     /**
-     * @param  mixed  $rule
+     * @param mixed $rule
+     *
      * @return \JPNut\Pearley\Parser\Rule
      */
     protected function createRule($rule): Rule
@@ -99,30 +102,31 @@ class Grammar
         }
 
         throw new InvalidArgumentException(
-            "Invalid rule provided: rule must be array or instance of ".Rule::class
+            'Invalid rule provided: rule must be array or instance of '.Rule::class
         );
     }
 
     /**
-     * @param  array  $rule
+     * @param array $rule
+     *
      * @return \JPNut\Pearley\Parser\Rule
      */
     protected function createRuleFromArray(array $rule): Rule
     {
         if (!isset($rule['name'])) {
-            throw new InvalidArgumentException("Rule name is required");
+            throw new InvalidArgumentException('Rule name is required');
         }
 
         if (!is_string($rule['name'])) {
-            throw new InvalidArgumentException("Rule name must be a string");
+            throw new InvalidArgumentException('Rule name must be a string');
         }
 
         if (isset($rule['symbols']) && !is_null($rule['symbols']) && !is_array($rule['symbols'])) {
-            throw new InvalidArgumentException("Rule symbols must be either: an array or null");
+            throw new InvalidArgumentException('Rule symbols must be either: an array or null');
         }
 
         if (isset($rule['postprocess']) && !is_null($rule['postprocess']) && !$rule['postprocess'] instanceof Closure) {
-            throw new InvalidArgumentException("Rule postprocess must be either: a closure or null");
+            throw new InvalidArgumentException('Rule postprocess must be either: a closure or null');
         }
 
         return new Rule(

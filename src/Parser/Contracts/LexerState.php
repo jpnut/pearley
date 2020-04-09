@@ -5,10 +5,11 @@ namespace JPNut\Pearley\Parser\Contracts;
 interface LexerState
 {
     /**
-     * @param  bool  $withIndex
+     * @param bool $withIndex
+     *
      * @return \JPNut\Pearley\Parser\Contracts\LexerState
      */
-    public function clone(bool $withIndex = false): LexerState;
+    public function clone(bool $withIndex = false): self;
 
     /**
      * @return int
@@ -31,8 +32,9 @@ interface LexerState
     public function getLastLineBreak(): int;
 
     /**
-     * @param  string  $text
-     * @param  \JPNut\Pearley\Parser\Contracts\LineBreaks  $lineBreaks
+     * @param string                                     $text
+     * @param \JPNut\Pearley\Parser\Contracts\LineBreaks $lineBreaks
+     *
      * @return \JPNut\Pearley\Parser\Contracts\LexerState
      */
     public function updateState(string $text, LineBreaks $lineBreaks): self;

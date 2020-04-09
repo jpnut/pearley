@@ -14,15 +14,15 @@ class MixinSymbolTest extends TestCase
      */
     public function it_can_serialize()
     {
-        $symbol = new MixinSymbol("foo");
+        $symbol = new MixinSymbol('foo');
 
-        $rule = new CompileRule("bar\$macrocall\$1", []);
+        $rule = new CompileRule('bar$macrocall$1', []);
 
         $result = new CompileResult();
 
-        $result->addMacroMap("bar-foo", "baz");
+        $result->addMacroMap('bar-foo', 'baz');
 
-        $this->assertEquals("baz", $symbol->serialize($rule, $result));
+        $this->assertEquals('baz', $symbol->serialize($rule, $result));
         $this->assertTrue($symbol->shouldWrap());
     }
 
@@ -33,13 +33,13 @@ class MixinSymbolTest extends TestCase
     {
         $this->expectExceptionMessage("Could not parse rule name: expecting '\$macrocall\$\d+' but none found.");
 
-        $symbol = new MixinSymbol("foo");
+        $symbol = new MixinSymbol('foo');
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
         $result = new CompileResult();
 
-        $result->addMacroMap("bar-foo", "baz");
+        $result->addMacroMap('bar-foo', 'baz');
 
         $symbol->serialize($rule, $result);
     }

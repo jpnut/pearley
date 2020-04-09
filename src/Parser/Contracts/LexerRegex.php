@@ -10,14 +10,16 @@ interface LexerRegex
     public function getLastIndex(): int;
 
     /**
-     * @param  int  $index
+     * @param int $index
+     *
      * @return \JPNut\Pearley\Parser\Contracts\LexerRegex
      */
     public function setLastIndex(int $index): self;
 
     /**
-     * @param  string  $input
-     * @param  mixed  ...$flags
+     * @param string $input
+     * @param mixed  ...$flags
+     *
      * @return array
      */
     public function match(string $input, ...$flags): array;

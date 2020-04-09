@@ -20,14 +20,14 @@ class CompileRule
     protected ?PostProcessor $postprocess;
 
     /**
-     * @param  string  $name
-     * @param  \JPNut\Pearley\Compiler\Contracts\Symbol[]  $symbols
-     * @param  \JPNut\Pearley\Compiler\PostProcessor|null  $postprocess
+     * @param string                                     $name
+     * @param \JPNut\Pearley\Compiler\Contracts\Symbol[] $symbols
+     * @param \JPNut\Pearley\Compiler\PostProcessor|null $postprocess
      */
     public function __construct(string $name, array $symbols, ?PostProcessor $postprocess = null)
     {
-        $this->name        = $name;
-        $this->symbols     = $symbols;
+        $this->name = $name;
+        $this->symbols = $symbols;
         $this->postprocess = $postprocess;
     }
 

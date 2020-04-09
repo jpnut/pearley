@@ -10,35 +10,35 @@ use JPNut\Pearley\Generator\GeneratorConfig;
 class Command
 {
     protected const COMMANDS = [
-        "compile" => [
-            "description" => "Compile a pearley grammar file into php",
-            "arguments"   => [
-                '<file.ne.php>' => "The pearley grammar file to be compiled",
+        'compile' => [
+            'description' => 'Compile a pearley grammar file into php',
+            'arguments'   => [
+                '<file.ne.php>' => 'The pearley grammar file to be compiled',
             ],
-            "options"     => [
+            'options'     => [
                 'out'       => [
                     'short'       => 'o',
                     'long'        => 'out',
                     'example'     => '[file.php]',
-                    'description' => "File to output to (defaults to stdout)"
+                    'description' => 'File to output to (defaults to stdout)',
                 ],
                 'stub'      => [
                     'short'       => 's',
                     'long'        => 'stub',
                     'example'     => '[grammar.stub]',
-                    'description' => "The stub to use when generating the php file"
+                    'description' => 'The stub to use when generating the php file',
                 ],
                 'namespace' => [
                     'short'       => 'n',
                     'long'        => 'namespace',
                     'example'     => '[Name\Space]',
-                    'description' => "The namespace to use for the generated class"
+                    'description' => 'The namespace to use for the generated class',
                 ],
                 'class'     => [
                     'short'       => 'c',
                     'long'        => 'class',
                     'example'     => '[Grammar]',
-                    'description' => "The class name to use for the generated file"
+                    'description' => 'The class name to use for the generated file',
                 ],
             ],
         ],
@@ -47,9 +47,9 @@ class Command
     public static function main(): void
     {
         try {
-            (new static)->run(array_slice($_SERVER['argv'], 1));
+            (new static())->run(array_slice($_SERVER['argv'], 1));
         } catch (InvalidArgumentException $e) {
-            print (Color::RED."Pearley error: {$e->getMessage()}".Color::RESET);
+            echo Color::RED."Pearley error: {$e->getMessage()}".Color::RESET;
 
             exit(1);
         }
@@ -58,7 +58,7 @@ class Command
     }
 
     /**
-     * @param  array  $argv
+     * @param array $argv
      */
     public function run(array $argv): void
     {
@@ -66,24 +66,24 @@ class Command
     }
 
     /**
-     * @param  array  $argv
+     * @param array $argv
      */
     protected function handleArguments(array $argv)
     {
         if (empty($argv)) {
             throw new InvalidArgumentException(
-                "Must provide some arguments. Use the help command to see a list of available commands."
+                'Must provide some arguments. Use the help command to see a list of available commands.'
             );
         }
 
         $action = array_shift($argv);
 
         switch ($action) {
-            case "help":
+            case 'help':
                 $this->help($argv);
 
                 break;
-            case "compile":
+            case 'compile':
                 $this->compile($argv);
 
                 break;
@@ -93,15 +93,15 @@ class Command
     }
 
     /**
-     * @param  string  $string
+     * @param string $string
      */
     protected function print(string $string): void
     {
-        print $string.PHP_EOL;
+        echo $string.PHP_EOL;
     }
 
     /**
-     * @param  string  $string
+     * @param string $string
      */
     protected function printHighlighted(string $string)
     {
@@ -109,11 +109,11 @@ class Command
     }
 
     /**
-     * @param  array  $printables
+     * @param array $printables
      */
     protected function printList(array $printables)
     {
-        $mask = Color::GREEN."  %-30s".Color::RESET." %s";
+        $mask = Color::GREEN.'  %-30s'.Color::RESET.' %s';
 
         foreach ($printables as $key => $value) {
             $this->print(sprintf($mask, $key, $value));
@@ -121,7 +121,7 @@ class Command
     }
 
     /**
-     * @param  array  $argv
+     * @param array $argv
      */
     protected function help(array $argv): void
     {
@@ -132,29 +132,29 @@ class Command
                 $this->unrecognisedCommand($name);
             }
 
-            $this->printHighlighted("Usage:");
+            $this->printHighlighted('Usage:');
 
             $command = static::COMMANDS[$name];
 
             $this->print(
                 "  {$name} "
-                .(!empty($command['arguments']) ? join(' ', array_keys($command['arguments'])).' ' : "")
-                .(!empty($command['options']) ? "[options] " : "")
+                .(!empty($command['arguments']) ? implode(' ', array_keys($command['arguments'])).' ' : '')
+                .(!empty($command['options']) ? '[options] ' : '')
             );
-            $this->print("");
+            $this->print('');
 
-            $this->printHighlighted("Arguments:");
+            $this->printHighlighted('Arguments:');
             $this->printList($command['arguments']);
-            $this->print("");
+            $this->print('');
 
-            $this->printHighlighted("Options:");
+            $this->printHighlighted('Options:');
             $this->printOptions($command['options']);
-            $this->print("");
+            $this->print('');
 
             return;
         }
 
-        $this->printHighlighted("Commands:");
+        $this->printHighlighted('Commands:');
 
         $commands = [];
 
@@ -166,7 +166,7 @@ class Command
     }
 
     /**
-     * @param  array  $options
+     * @param array $options
      */
     protected function printOptions(array $options)
     {
@@ -180,7 +180,7 @@ class Command
     }
 
     /**
-     * @param  string  $command
+     * @param string $command
      */
     protected function unrecognisedCommand(string $command)
     {
@@ -190,17 +190,17 @@ class Command
     }
 
     /**
-     * @param  array  $argv
+     * @param array $argv
      */
     protected function compile(array $argv)
     {
-        $arguments = $this->arguments("compile", $argv);
+        $arguments = $this->arguments('compile', $argv);
 
         $fileName = $arguments->getArguments()[0];
 
         $options = $arguments->getOptions();
 
-        $compiler = new Compiler;
+        $compiler = new Compiler();
 
         $generatorConfig = GeneratorConfig::initialise();
 
@@ -221,8 +221,8 @@ class Command
     }
 
     /**
-     * @param  array  $options
-     * @param  string  $result
+     * @param array  $options
+     * @param string $result
      */
     protected function outputCompiledFile(array $options, string $result)
     {
@@ -233,7 +233,7 @@ class Command
                 mkdir($dirname, 0777, true);
             }
 
-            $out = fopen($options['out'], "w");
+            $out = fopen($options['out'], 'w');
 
             fwrite($out, $result);
 
@@ -248,21 +248,23 @@ class Command
     }
 
     /**
-     * @param  string  $command
-     * @param  array  $argv
+     * @param string $command
+     * @param array  $argv
+     *
      * @return \JPNut\Pearley\CLI\Arguments
      */
     protected function arguments(string $command, array $argv): Arguments
     {
         return (new Arguments(
             $command,
-            static::COMMANDS[$command]["arguments"],
-            static::COMMANDS[$command]["options"]
+            static::COMMANDS[$command]['arguments'],
+            static::COMMANDS[$command]['options']
         ))->read($argv);
     }
 
     /**
-     * @param  string  $fileName
+     * @param string $fileName
+     *
      * @return string
      */
     protected function defaultClass(string $fileName): string

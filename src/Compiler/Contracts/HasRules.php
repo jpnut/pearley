@@ -8,8 +8,9 @@ use JPNut\Pearley\Compiler\CompileRule;
 interface HasRules
 {
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function generateCompileRules(CompileRule $rule, CompileResult $result): array;

@@ -5,11 +5,12 @@ namespace JPNut\Pearley\Parser\Contracts;
 interface Lexer
 {
     /**
-     * @param  string  $buffer
-     * @param  \JPNut\Pearley\Parser\Contracts\LexerState|null  $state
+     * @param string                                          $buffer
+     * @param \JPNut\Pearley\Parser\Contracts\LexerState|null $state
+     *
      * @return \JPNut\Pearley\Parser\Contracts\Lexer
      */
-    public function reset(string $buffer = "", ?LexerState $state = null): self;
+    public function reset(string $buffer = '', ?LexerState $state = null): self;
 
     /**
      * @return \JPNut\Pearley\Parser\Contracts\Token|null
@@ -22,14 +23,16 @@ interface Lexer
     public function save(): ?LexerState;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\Token|null  $token
-     * @param  string  $message
+     * @param \JPNut\Pearley\Parser\Contracts\Token|null $token
+     * @param string                                     $message
+     *
      * @return string
      */
-    public function formatError(?Token $token = null, string $message = "Error"): string;
+    public function formatError(?Token $token = null, string $message = 'Error'): string;
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return bool
      */
     public function has(string $name): bool;

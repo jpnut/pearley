@@ -36,9 +36,8 @@ class LiteralSymbol implements Symbol, HasRules
      */
     protected bool $should_wrap = false;
 
-
     /**
-     * @param  string  $literal
+     * @param string $literal
      */
     public function __construct(string $literal)
     {
@@ -54,8 +53,9 @@ class LiteralSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     public function serialize(CompileRule $rule, CompileResult $result): ?string
@@ -75,8 +75,9 @@ class LiteralSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     protected function getSerializedValue(CompileRule $rule, CompileResult $result): ?string
@@ -99,8 +100,9 @@ class LiteralSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function generateCompileRules(CompileRule $rule, CompileResult $result): array
@@ -124,7 +126,7 @@ class LiteralSymbol implements Symbol, HasRules
     protected function createLanguageRule(): LanguageRule
     {
         return new LanguageRule(
-            array_map(fn(string $char) => new static($char), str_split($this->literal)),
+            array_map(fn (string $char) => new static($char), str_split($this->literal)),
             PostProcessor::builtin(PostProcessor::JOINER),
         );
     }

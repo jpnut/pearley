@@ -12,7 +12,7 @@ class IncludeComponent implements Component
     protected string $name;
 
     /**
-     * @param  string  $name
+     * @param string $name
      */
     public function __construct(string $name)
     {

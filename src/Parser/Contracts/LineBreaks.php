@@ -5,10 +5,11 @@ namespace JPNut\Pearley\Parser\Contracts;
 interface LineBreaks
 {
     /**
-     * @param  string  $text
+     * @param string $text
+     *
      * @return \JPNut\Pearley\Parser\Contracts\LineBreaks
      */
-    public function calculate(string $text): LineBreaks;
+    public function calculate(string $text): self;
 
     /**
      * @return int

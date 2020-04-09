@@ -52,17 +52,18 @@ class PendingTokenDefinition
     protected array $keywords = [];
 
     /**
-     * @param  string  $name
-     * @param  string|null  $pattern
+     * @param string      $name
+     * @param string|null $pattern
      */
     public function __construct(string $name, ?string $pattern)
     {
-        $this->name    = $name;
+        $this->name = $name;
         $this->pattern = $pattern;
     }
 
     /**
-     * @param  \Closure  $valueMap
+     * @param \Closure $valueMap
+     *
      * @return $this
      */
     public function withValueMap(Closure $valueMap): self
@@ -113,7 +114,8 @@ class PendingTokenDefinition
     }
 
     /**
-     * @param  string  $push
+     * @param string $push
+     *
      * @return $this
      */
     public function shouldPushTo(string $push): self
@@ -124,7 +126,8 @@ class PendingTokenDefinition
     }
 
     /**
-     * @param  string  $next
+     * @param string $next
+     *
      * @return $this
      */
     public function withNext(string $next): self

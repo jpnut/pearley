@@ -23,19 +23,20 @@ class LexerState implements LexerStateContract
     protected int $lastLineBreak;
 
     /**
-     * @param  int  $index
-     * @param  int  $line
-     * @param  int  $lastLineBreak
+     * @param int $index
+     * @param int $line
+     * @param int $lastLineBreak
      */
     public function __construct(int $index = 0, int $line = 1, int $lastLineBreak = 0)
     {
-        $this->index         = $index;
-        $this->line          = $line;
+        $this->index = $index;
+        $this->line = $line;
         $this->lastLineBreak = $lastLineBreak;
     }
 
     /**
-     * @param  bool  $withIndex
+     * @param bool $withIndex
+     *
      * @return \JPNut\Pearley\Parser\Contracts\LexerState
      */
     public function clone(bool $withIndex = false): LexerStateContract
@@ -56,7 +57,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  int  $amount
+     * @param int $amount
+     *
      * @return \JPNut\Pearley\Parser\LexerState
      */
     protected function incrementIndex(int $amount): self
@@ -75,7 +77,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  int  $amount
+     * @param int $amount
+     *
      * @return \JPNut\Pearley\Parser\LexerState
      */
     protected function incrementLine(int $amount): self
@@ -102,7 +105,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  int  $lastLineBreak
+     * @param int $lastLineBreak
+     *
      * @return \JPNut\Pearley\Parser\LexerState
      */
     protected function setLastLineBreak(int $lastLineBreak): self
@@ -113,8 +117,9 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  string  $text
-     * @param  \JPNut\Pearley\Parser\Contracts\LineBreaks  $lineBreaks
+     * @param string                                     $text
+     * @param \JPNut\Pearley\Parser\Contracts\LineBreaks $lineBreaks
+     *
      * @return \JPNut\Pearley\Parser\LexerState
      */
     public function updateState(string $text, LineBreaksContract $lineBreaks): self

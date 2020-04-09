@@ -12,8 +12,9 @@ class MacrosTest extends TestCase
     /**
      * @test
      * @dataProvider macros
-     * @param  string  $macro
-     * @param  string  $expected
+     *
+     * @param string $macro
+     * @param string $expected
      */
     public function it_can_parse_macro(string $macro, string $expected)
     {
@@ -29,16 +30,16 @@ class MacrosTest extends TestCase
     {
         return [
             [
-                "Cows oink.",
-                "Cows oink."
+                'Cows oink.',
+                'Cows oink.',
             ],
             [
-                "Cows moo!",
-                "Cows moo!",
+                'Cows moo!',
+                'Cows moo!',
             ],
             [
-                "Cows baa.",
-                "Cows baa.",
+                'Cows baa.',
+                'Cows baa.',
             ],
         ];
     }

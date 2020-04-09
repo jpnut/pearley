@@ -15,7 +15,7 @@ class StateTest extends TestCase
     public function it_can_get_next_state()
     {
         $state = new State(
-            $foo = new Rule("foo", []),
+            $foo = new Rule('foo', []),
             0,
             0,
             $stateWantedBy = new ArrayObject([]),
@@ -23,7 +23,7 @@ class StateTest extends TestCase
         );
 
         $right = new State(
-            new Rule("bar", []),
+            new Rule('bar', []),
             2,
             2,
             new ArrayObject([]),
@@ -47,7 +47,7 @@ class StateTest extends TestCase
     public function it_can_build_complex_data_array()
     {
         $state = new State(
-            $foo = new Rule("state", ["foo", "bar", "baz"]),
+            $foo = new Rule('state', ['foo', 'bar', 'baz']),
             0,
             0,
             $stateWantedBy = new ArrayObject([]),
@@ -55,7 +55,7 @@ class StateTest extends TestCase
         );
 
         $state1 = new State(
-            new Rule("state1", []),
+            new Rule('state1', []),
             0,
             0,
             new ArrayObject([]),
@@ -63,7 +63,7 @@ class StateTest extends TestCase
         );
 
         $state2 = new State(
-            new Rule("state2", []),
+            new Rule('state2', []),
             0,
             0,
             new ArrayObject([]),
@@ -71,7 +71,7 @@ class StateTest extends TestCase
         );
 
         $state3 = new State(
-            new Rule("state3", []),
+            new Rule('state3', []),
             0,
             0,
             new ArrayObject([]),
@@ -93,7 +93,7 @@ class StateTest extends TestCase
     public function it_can_postprocess_data()
     {
         $state = new State(
-            $foo = new Rule("foo", [], fn() => "bar"),
+            $foo = new Rule('foo', [], fn () => 'bar'),
             0,
             0,
             $stateWantedBy = new ArrayObject([]),
@@ -102,7 +102,7 @@ class StateTest extends TestCase
 
         $state->finish();
 
-        $this->assertEquals("bar", $state->getData());
+        $this->assertEquals('bar', $state->getData());
     }
 
     /**
@@ -111,13 +111,13 @@ class StateTest extends TestCase
     public function it_can_cast_state_to_string()
     {
         $state = new State(
-            $foo = new Rule("foo", ["bar"]),
+            $foo = new Rule('foo', ['bar']),
             0,
             0,
             $stateWantedBy = new ArrayObject([]),
             []
         );
 
-        $this->assertEquals("{foo →  ●  bar}, from: 0", (string ) $state);
+        $this->assertEquals('{foo →  ●  bar}, from: 0', (string) $state);
     }
 }

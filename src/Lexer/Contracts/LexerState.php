@@ -8,16 +8,18 @@ use JPNut\Pearley\Parser\Contracts\LineBreaks;
 interface LexerState extends BaseLexerState
 {
     /**
-     * @param  string  $config
+     * @param string $config
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerState
      */
-    public static function create(string $config): LexerState;
+    public static function create(string $config): self;
 
     /**
-     * @param  bool  $withIndex
+     * @param bool $withIndex
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerState
      */
-    public function clone(bool $withIndex = false): LexerState;
+    public function clone(bool $withIndex = false): self;
 
     /**
      * @return int
@@ -35,8 +37,9 @@ interface LexerState extends BaseLexerState
     public function getCol(): int;
 
     /**
-     * @param  string  $text
-     * @param  \JPNut\Pearley\Parser\Contracts\LineBreaks  $lineBreaks
+     * @param string                                     $text
+     * @param \JPNut\Pearley\Parser\Contracts\LineBreaks $lineBreaks
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerState
      */
     public function updateState(string $text, LineBreaks $lineBreaks): self;
@@ -52,7 +55,8 @@ interface LexerState extends BaseLexerState
     public function getConfigName(): string;
 
     /**
-     * @param  string|null  $configName
+     * @param string|null $configName
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerState
      */
     public function setConfigName(?string $configName): self;
@@ -60,11 +64,12 @@ interface LexerState extends BaseLexerState
     /**
      * @return \JPNut\Pearley\Lexer\Contracts\LexerState|null
      */
-    public function pop(): ?LexerState;
+    public function pop(): ?self;
 
     /**
-     * @param  string  $configName
+     * @param string $configName
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerState|null
      */
-    public function push(string $configName): ?LexerState;
+    public function push(string $configName): ?self;
 }

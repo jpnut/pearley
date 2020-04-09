@@ -23,14 +23,14 @@ class Rule
     protected ?Closure $postprocess;
 
     /**
-     * @param  string  $name
-     * @param  array  $symbols
-     * @param  \Closure|null  $postprocess
+     * @param string        $name
+     * @param array         $symbols
+     * @param \Closure|null $postprocess
      */
     public function __construct(string $name, array $symbols, ?Closure $postprocess = null)
     {
-        $this->name        = $name;
-        $this->symbols     = $this->parseSymbols($symbols);
+        $this->name = $name;
+        $this->symbols = $this->parseSymbols($symbols);
         $this->postprocess = $postprocess;
     }
 
@@ -51,7 +51,8 @@ class Rule
     }
 
     /**
-     * @param  int  $index
+     * @param int $index
+     *
      * @return \JPNut\Pearley\Parser\Symbol|null
      */
     public function getSymbol(int $index)
@@ -60,7 +61,8 @@ class Rule
     }
 
     /**
-     * @param  int  $dot
+     * @param int $dot
+     *
      * @return bool
      */
     public function isComplete(int $dot): bool
@@ -77,8 +79,9 @@ class Rule
     }
 
     /**
-     * @param  mixed  $data
-     * @param  int  $reference
+     * @param mixed $data
+     * @param int   $reference
+     *
      * @return mixed
      */
     public function postprocess($data, int $reference)
@@ -93,32 +96,35 @@ class Rule
     }
 
     /**
-     * @param  int  $withCursorAt
+     * @param int $withCursorAt
+     *
      * @return string
      */
     public function toString(int $withCursorAt): string
     {
-        $symbols = array_map(fn(Symbol $symbol) => (string) $symbol, $this->symbols);
+        $symbols = array_map(fn (Symbol $symbol) => (string) $symbol, $this->symbols);
 
-        $symbolSequence = join(
+        $symbolSequence = implode(
             ' ',
-            [...array_slice($symbols, 0, $withCursorAt), " ● ", ...array_slice($symbols, $withCursorAt)]
+            [...array_slice($symbols, 0, $withCursorAt), ' ● ', ...array_slice($symbols, $withCursorAt)]
         );
 
         return "{$this->name} → {$symbolSequence}";
     }
 
     /**
-     * @param  array  $symbols
+     * @param array $symbols
+     *
      * @return array
      */
     protected function parseSymbols(array $symbols): array
     {
-        return array_map(fn($symbol) => $this->createSymbol($symbol), $symbols);
+        return array_map(fn ($symbol) => $this->createSymbol($symbol), $symbols);
     }
 
     /**
-     * @param  mixed  $symbol
+     * @param mixed $symbol
+     *
      * @return \JPNut\Pearley\Parser\Symbol
      */
     protected function createSymbol($symbol): Symbol
@@ -136,12 +142,13 @@ class Rule
         }
 
         throw new InvalidArgumentException(
-            "Invalid symbol provided: symbol must be a string, an array or an instance of ".Symbol::class
+            'Invalid symbol provided: symbol must be a string, an array or an instance of '.Symbol::class
         );
     }
 
     /**
-     * @param  string  $symbol
+     * @param string $symbol
+     *
      * @return \JPNut\Pearley\Parser\Symbol
      */
     protected function createSymbolFromString(string $symbol): Symbol
@@ -150,21 +157,22 @@ class Rule
     }
 
     /**
-     * @param  array  $symbol
+     * @param array $symbol
+     *
      * @return \JPNut\Pearley\Parser\Symbol
      */
     protected function createSymbolFromArray(array $symbol): Symbol
     {
         if (!isset($symbol['value'])) {
-            throw new InvalidArgumentException("Symbol value is required");
+            throw new InvalidArgumentException('Symbol value is required');
         }
 
         if (!is_string($symbol['value'])) {
-            throw new InvalidArgumentException("Symbol value must be a string");
+            throw new InvalidArgumentException('Symbol value must be a string');
         }
 
         if (isset($symbol['type']) && !is_null($symbol['type']) && !is_int($symbol['type'])) {
-            throw new InvalidArgumentException("Symbol type must be either: an integer or null");
+            throw new InvalidArgumentException('Symbol type must be either: an integer or null');
         }
 
         return new Symbol(

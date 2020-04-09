@@ -11,12 +11,12 @@ use PHPUnit\Framework\TestCase;
 class CommandTest extends TestCase
 {
     /**
-     * @var  \org\bovigo\vfs\vfsStreamDirectory
+     * @var \org\bovigo\vfs\vfsStreamDirectory
      */
     protected vfsStreamDirectory $root;
 
     /**
-     * set up test environment
+     * set up test environment.
      */
     public function setUp(): void
     {
@@ -30,9 +30,9 @@ class CommandTest extends TestCase
      */
     public function it_throws_if_no_arguments_provided()
     {
-        $this->expectExceptionMessage("Must provide some arguments. Use the help command to see a list of available commands.");
+        $this->expectExceptionMessage('Must provide some arguments. Use the help command to see a list of available commands.');
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run([]);
     }
@@ -44,7 +44,7 @@ class CommandTest extends TestCase
     {
         $this->expectExceptionMessage("Unrecognised command: 'foo'. Use the help command to see a list of available commands.");
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run(['foo']);
     }
@@ -54,12 +54,12 @@ class CommandTest extends TestCase
      */
     public function it_can_provide_help_with_list_of_commands()
     {
-        $this->expectOutputString(join("\n", [
-            Color::YELLOW."Commands:".Color::RESET,
-            Color::GREEN."  compile                       ".Color::RESET." Compile a pearley grammar file into php\n",
+        $this->expectOutputString(implode("\n", [
+            Color::YELLOW.'Commands:'.Color::RESET,
+            Color::GREEN.'  compile                       '.Color::RESET." Compile a pearley grammar file into php\n",
         ]));
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run(['help']);
     }
@@ -71,7 +71,7 @@ class CommandTest extends TestCase
     {
         $this->expectExceptionMessage("Unrecognised command: 'foo'. Use the help command to see a list of available commands.");
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run(['help', 'foo']);
     }
@@ -81,22 +81,22 @@ class CommandTest extends TestCase
      */
     public function it_can_provide_help_with_args_for_specific_command()
     {
-        $this->expectOutputString(join("\n", [
-            Color::YELLOW."Usage:".Color::RESET,
+        $this->expectOutputString(implode("\n", [
+            Color::YELLOW.'Usage:'.Color::RESET,
             "  compile <file.ne.php> [options] \n",
 
-            Color::YELLOW."Arguments:".Color::RESET,
-            Color::GREEN."  <file.ne.php>                 ".Color::RESET." The pearley grammar file to be compiled\n",
+            Color::YELLOW.'Arguments:'.Color::RESET,
+            Color::GREEN.'  <file.ne.php>                 '.Color::RESET." The pearley grammar file to be compiled\n",
 
-            Color::YELLOW."Options:".Color::RESET,
-            Color::GREEN."  -o --out [file.php]           ".Color::RESET." File to output to (defaults to stdout)",
-            Color::GREEN."  -s --stub [grammar.stub]      ".Color::RESET." The stub to use when generating the php file",
-            Color::GREEN."  -n --namespace [Name\\Space]   ".Color::RESET." The namespace to use for the generated class",
-            Color::GREEN."  -c --class [Grammar]          ".Color::RESET." The class name to use for the generated file\n\n",
+            Color::YELLOW.'Options:'.Color::RESET,
+            Color::GREEN.'  -o --out [file.php]           '.Color::RESET.' File to output to (defaults to stdout)',
+            Color::GREEN.'  -s --stub [grammar.stub]      '.Color::RESET.' The stub to use when generating the php file',
+            Color::GREEN.'  -n --namespace [Name\\Space]   '.Color::RESET.' The namespace to use for the generated class',
+            Color::GREEN.'  -c --class [Grammar]          '.Color::RESET." The class name to use for the generated file\n\n",
 
         ]));
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run(['help', 'compile']);
     }
@@ -108,7 +108,7 @@ class CommandTest extends TestCase
     {
         $this->expectExceptionMessage("Expected to receive 1 argument(s) for command 'compile' but received 0");
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run(['compile']);
     }
@@ -116,36 +116,38 @@ class CommandTest extends TestCase
     /**
      * @test
      * @dataProvider grammars
-     * @param  string  $grammar
-     * @param  string  $namespace
-     * @param  string  $class
-     * @param  string  $expected
+     *
+     * @param string $grammar
+     * @param string $namespace
+     * @param string $class
+     * @param string $expected
      */
     public function it_can_compile_grammars(string $grammar, string $namespace, string $class, string $expected)
     {
         $this->expectOutputString(file_get_contents($expected).PHP_EOL);
 
-        $command = new Command;
+        $command = new Command();
 
         $command->run([
             'compile',
             $grammar,
-            "-n",
+            '-n',
             $namespace,
-            "-c",
+            '-c',
             $class,
-            "-s",
-            __DIR__."/../../src/stubs/grammar.stub"
+            '-s',
+            __DIR__.'/../../src/stubs/grammar.stub',
         ]);
     }
 
     /**
      * @test
      * @dataProvider grammars
-     * @param  string  $grammar
-     * @param  string  $namespace
-     * @param  string  $class
-     * @param  string  $expected
+     *
+     * @param string $grammar
+     * @param string $namespace
+     * @param string $class
+     * @param string $expected
      */
     public function it_can_write_compiled_grammars_to_file(
         string $grammar,
@@ -153,7 +155,7 @@ class CommandTest extends TestCase
         string $class,
         string $expected
     ) {
-        $command = new Command;
+        $command = new Command();
 
         $file_name = "{$class}.php";
 
@@ -164,12 +166,12 @@ class CommandTest extends TestCase
         $command->run([
             'compile',
             $grammar,
-            "-n",
+            '-n',
             $namespace,
-            "-c",
+            '-c',
             $class,
-            "-o",
-            $qualified_file_name
+            '-o',
+            $qualified_file_name,
         ]);
 
         $this->assertTrue($this->root->hasChild($file_name));
@@ -184,40 +186,40 @@ class CommandTest extends TestCase
     {
         return [
             [
-                __DIR__."/../Grammars/TestGrammar1.ne",
+                __DIR__.'/../Grammars/TestGrammar1.ne',
                 "JPNut\\Pearley\\Tests\Grammars",
-                "TestGrammar1",
-                __DIR__."/../Grammars/TestGrammar1.php",
+                'TestGrammar1',
+                __DIR__.'/../Grammars/TestGrammar1.php',
             ],
             [
-                __DIR__."/../Grammars/TestGrammar2.ne",
+                __DIR__.'/../Grammars/TestGrammar2.ne',
                 "JPNut\\Pearley\\Tests\Grammars",
-                "TestGrammar2",
-                __DIR__."/../Grammars/TestGrammar2.php",
+                'TestGrammar2',
+                __DIR__.'/../Grammars/TestGrammar2.php',
             ],
             [
-                __DIR__."/../Grammars/TestGrammar3.ne",
+                __DIR__.'/../Grammars/TestGrammar3.ne',
                 "JPNut\\Pearley\\Tests\Grammars",
-                "TestGrammar3",
-                __DIR__."/../Grammars/TestGrammar3.php",
+                'TestGrammar3',
+                __DIR__.'/../Grammars/TestGrammar3.php',
             ],
             [
-                __DIR__."/../Grammars/TestGrammar4.ne",
+                __DIR__.'/../Grammars/TestGrammar4.ne',
                 "JPNut\\Pearley\\Tests\Grammars",
-                "TestGrammar4",
-                __DIR__."/../Grammars/TestGrammar4.php",
+                'TestGrammar4',
+                __DIR__.'/../Grammars/TestGrammar4.php',
             ],
             [
-                __DIR__."/../Grammars/TestGrammar5.ne",
+                __DIR__.'/../Grammars/TestGrammar5.ne',
                 "JPNut\\Pearley\\Tests\Grammars",
-                "TestGrammar5",
-                __DIR__."/../Grammars/TestGrammar5.php",
+                'TestGrammar5',
+                __DIR__.'/../Grammars/TestGrammar5.php',
             ],
             [
-                __DIR__."/../Grammars/TestGrammar6.ne",
+                __DIR__.'/../Grammars/TestGrammar6.ne',
                 "JPNut\\Pearley\\Tests\Grammars",
-                "TestGrammar6",
-                __DIR__."/../Grammars/TestGrammar6.php",
+                'TestGrammar6',
+                __DIR__.'/../Grammars/TestGrammar6.php',
             ],
         ];
     }

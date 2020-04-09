@@ -46,12 +46,12 @@ class Lexer implements LexerContract
     protected LineBreaks $lineBreaks;
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\LexerConfig[]  $additionalConfigs
+     * @param \JPNut\Pearley\Lexer\Contracts\LexerConfig[] $additionalConfigs
      */
     public function __construct(LexerConfigContract ...$additionalConfigs)
     {
-        $this->configs    = $this->setConfigs(...$additionalConfigs);
-        $this->lineBreaks = new LineBreaks;
+        $this->configs = $this->setConfigs(...$additionalConfigs);
+        $this->lineBreaks = new LineBreaks();
 
         $this->reset();
     }
@@ -65,11 +65,12 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  string  $buffer
-     * @param  \JPNut\Pearley\Parser\Contracts\LexerState|null  $state
+     * @param string                                          $buffer
+     * @param \JPNut\Pearley\Parser\Contracts\LexerState|null $state
+     *
      * @return \JPNut\Pearley\Lexer\Lexer
      */
-    public function reset(string $buffer = "", ?BaseLexerStateContract $state = null): self
+    public function reset(string $buffer = '', ?BaseLexerStateContract $state = null): self
     {
         $this->buffer = $buffer;
 
@@ -129,11 +130,12 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\Token|null  $token
-     * @param  string  $message
+     * @param \JPNut\Pearley\Parser\Contracts\Token|null $token
+     * @param string                                     $message
+     *
      * @return string
      */
-    public function formatError(?BaseTokenContract $token = null, string $message = "Error"): string
+    public function formatError(?BaseTokenContract $token = null, string $message = 'Error'): string
     {
         if (is_null($token)) {
             $token = new Token(
@@ -146,21 +148,22 @@ class Lexer implements LexerContract
             );
         }
 
-        $start     = max(0, $token->getOffset() - $token->getCol() + 1);
-        $eol       = $token->getLineBreaks() > 0
+        $start = max(0, $token->getOffset() - $token->getCol() + 1);
+        $eol = $token->getLineBreaks() > 0
             ? strpos($token->getText(), "\n")
             : (strpos($this->buffer, "\n", $start) ?: strlen($this->buffer));
         $firstLine = substr($this->buffer, $start, $eol - $start);
 
-        $message .= " at line ".$token->getLine()." col ".$token->getCol().":\n \n";
-        $message .= "  ".$firstLine."\n";
-        $message .= "  ".join(' ', array_fill(0, $token->getCol(), null))."^";
+        $message .= ' at line '.$token->getLine().' col '.$token->getCol().":\n \n";
+        $message .= '  '.$firstLine."\n";
+        $message .= '  '.implode(' ', array_fill(0, $token->getCol(), null)).'^';
 
         return $message;
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return bool
      */
     public function has(string $name): bool
@@ -177,9 +180,10 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
-     * @param  string  $text
-     * @param  int  $offset
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     * @param string                                         $text
+     * @param int                                            $offset
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\Token
      */
     protected function createToken(TokenDefinitionContract $definition, string $text, int $offset): TokenContract
@@ -196,7 +200,7 @@ class Lexer implements LexerContract
         $this->state->updateState($text, $lineBreaks);
 
         if ($definition->shouldThrow()) {
-            throw new Exception($this->formatError($token, "invalid syntax"));
+            throw new Exception($this->formatError($token, 'invalid syntax'));
         }
 
         if ($definition->shouldPop()) {
@@ -211,8 +215,9 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
-     * @param  string  $text
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     * @param string                                         $text
+     *
      * @return \JPNut\Pearley\Parser\LineBreaks
      */
     protected function calculateLineBreaks(TokenDefinitionContract $definition, string $text): LineBreaks
@@ -234,7 +239,8 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  array  $matches
+     * @param array $matches
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
     protected function findMatchDefinition(array $matches): TokenDefinitionContract
@@ -253,7 +259,8 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  array  $matches
+     * @param array $matches
+     *
      * @return string
      */
     protected function getMatchText(array $matches): string
@@ -270,7 +277,8 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  string  $getConfigName
+     * @param string $getConfigName
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerConfig
      */
     protected function getConfig(string $getConfigName): LexerConfigContract
@@ -279,7 +287,8 @@ class Lexer implements LexerContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\LexerConfig  ...$additionalConfigs
+     * @param \JPNut\Pearley\Lexer\Contracts\LexerConfig ...$additionalConfigs
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\LexerConfig[]
      */
     protected function setConfigs(LexerConfigContract ...$additionalConfigs): array

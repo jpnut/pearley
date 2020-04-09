@@ -12,7 +12,7 @@ class SymbolTest extends TestCase
      */
     public function it_defaults_to_nonterminal_type()
     {
-        $symbol = new Symbol("foo");
+        $symbol = new Symbol('foo');
 
         $this->assertEquals(Symbol::NONTERMINAL, $symbol->getType());
     }
@@ -24,7 +24,7 @@ class SymbolTest extends TestCase
     {
         $this->expectExceptionMessage("Symbol type '-1' not recognised.");
 
-        new Symbol("foo", -1);
+        new Symbol('foo', -1);
     }
 
     /**
@@ -32,20 +32,20 @@ class SymbolTest extends TestCase
      */
     public function it_can_stringify_symbol_value()
     {
-        $nonterminal = new Symbol("foo", Symbol::NONTERMINAL);
+        $nonterminal = new Symbol('foo', Symbol::NONTERMINAL);
 
-        $this->assertEquals("foo", (string) $nonterminal);
+        $this->assertEquals('foo', (string) $nonterminal);
 
-        $regex = new Symbol("foo", Symbol::REGEX);
+        $regex = new Symbol('foo', Symbol::REGEX);
 
-        $this->assertEquals("foo", (string) $regex);
+        $this->assertEquals('foo', (string) $regex);
 
-        $literal = new Symbol("foo", Symbol::LITERAL);
+        $literal = new Symbol('foo', Symbol::LITERAL);
 
-        $this->assertEquals("\"foo\"", (string) $literal);
+        $this->assertEquals('"foo"', (string) $literal);
 
-        $token = new Symbol("foo", Symbol::TOKEN);
+        $token = new Symbol('foo', Symbol::TOKEN);
 
-        $this->assertEquals("%foo", (string) $token);
+        $this->assertEquals('%foo', (string) $token);
     }
 }

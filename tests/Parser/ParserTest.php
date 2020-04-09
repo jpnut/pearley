@@ -40,22 +40,22 @@ class ParserTest extends TestCase
             )
         );
 
-        $expectedError = join("\n", [
-            "Syntax error at line 2 col 3:",
-            " ",
-            "  12!",
-            "    ^",
-            "Unexpected \"!\". Instead, I was expecting to see one of the following:",
-            "",
-            "A character matching [a-z0-9] based on:",
-            "    x →  ●  [a-z0-9]",
-            "    y\$ebnf$1 → y\$ebnf$1  ●  x",
-            "    y →  ●  y\$ebnf$1",
-            "A \"\\n\" based on:",
-            "    x →  ●  \"\\n\"",
-            "    y\$ebnf$1 → y\$ebnf$1  ●  x",
-            "    y →  ●  y\$ebnf$1",
-            ""
+        $expectedError = implode("\n", [
+            'Syntax error at line 2 col 3:',
+            ' ',
+            '  12!',
+            '    ^',
+            'Unexpected "!". Instead, I was expecting to see one of the following:',
+            '',
+            'A character matching [a-z0-9] based on:',
+            '    x →  ●  [a-z0-9]',
+            '    y$ebnf$1 → y$ebnf$1  ●  x',
+            '    y →  ●  y$ebnf$1',
+            'A "\\n" based on:',
+            '    x →  ●  "\\n"',
+            '    y$ebnf$1 → y$ebnf$1  ●  x',
+            '    y →  ●  y$ebnf$1',
+            '',
         ]);
 
         $this->expectExceptionMessage($expectedError);
@@ -76,7 +76,7 @@ class ParserTest extends TestCase
 
         $this->expectExceptionMessage("ws → wsc  ●  ws\n    ↑ ︎3 more lines identical to this");
 
-        $parser->feed("    b");
+        $parser->feed('    b');
     }
 
     /**
@@ -90,9 +90,9 @@ class ParserTest extends TestCase
             )
         );
 
-        $this->expectExceptionMessage("Unexpected \"b\"");
+        $this->expectExceptionMessage('Unexpected "b"');
 
-        $parser->feed("    b");
+        $parser->feed('    b');
     }
 
     /**
@@ -108,7 +108,7 @@ class ParserTest extends TestCase
             )
         );
 
-        $first = "this is foo";
+        $first = 'this is foo';
 
         $parser->feed($first);
 
@@ -134,8 +134,8 @@ class ParserTest extends TestCase
             )
         );
 
-        $first  = "this is foo";
-        $second = " and this is bar";
+        $first = 'this is foo';
+        $second = ' and this is bar';
 
         $parser->feed($first);
 
@@ -149,7 +149,7 @@ class ParserTest extends TestCase
         $this->assertEquals(11, $parser->getCurrent());
         $this->assertCount(12, $parser->getTable());
 
-        $this->assertEquals(["this is foo"], $parser->getResults());
+        $this->assertEquals(['this is foo'], $parser->getResults());
     }
 
     /**
@@ -191,7 +191,7 @@ class ParserTest extends TestCase
 
         $this->assertEquals(3, $col->getLexerState()->getLine());
 
-        $parser->feed("q");
+        $parser->feed('q');
 
         $parser->restore($col);
 
@@ -216,7 +216,7 @@ class ParserTest extends TestCase
         $this->assertEquals(2, $col->getLexerState()->getLine());
         $this->assertEquals(3, $col->getLexerState()->getCol());
 
-        $parser->feed("123");
+        $parser->feed('123');
 
         $this->assertEquals(6, $parser->getLexerState()->getCol());
 
@@ -225,7 +225,7 @@ class ParserTest extends TestCase
         $this->assertEquals(2, $parser->getLexerState()->getLine());
         $this->assertEquals(3, $parser->getLexerState()->getCol());
 
-        $parser->feed("456");
+        $parser->feed('456');
 
         $this->assertEquals(6, $parser->getLexerState()->getCol());
     }
@@ -241,9 +241,9 @@ class ParserTest extends TestCase
             )
         );
 
-        $parser->feed("this is foo");
+        $parser->feed('this is foo');
 
-        $this->assertEquals("this is foo", $parser->getResults()[0]);
+        $this->assertEquals('this is foo', $parser->getResults()[0]);
     }
 
     /**
@@ -251,18 +251,18 @@ class ParserTest extends TestCase
      */
     public function it_throws_error_with_lexer_token()
     {
-        $expectedError = join("\n", [
-            "Syntax error at line 1 col 2:",
-            " ",
-            "  t1 error",
-            "   ^",
-            "Unexpected number token: \"1\". Instead, I was expecting to see one of the following:",
-            "",
-            "A ws token based on:",
-            "    ws →  ●  %ws",
-            "    blocks → blocks  ●  ws block",
-            "    blocks →  ●  blocks ws block",
-            ""
+        $expectedError = implode("\n", [
+            'Syntax error at line 1 col 2:',
+            ' ',
+            '  t1 error',
+            '   ^',
+            'Unexpected number token: "1". Instead, I was expecting to see one of the following:',
+            '',
+            'A ws token based on:',
+            '    ws →  ●  %ws',
+            '    blocks → blocks  ●  ws block',
+            '    blocks →  ●  blocks ws block',
+            '',
         ]);
 
         $this->expectExceptionMessage($expectedError);
@@ -273,6 +273,6 @@ class ParserTest extends TestCase
             )
         );
 
-        $parser->feed("t1 error");
+        $parser->feed('t1 error');
     }
 }

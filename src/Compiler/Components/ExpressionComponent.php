@@ -17,12 +17,12 @@ class ExpressionComponent implements Component
     protected array $rules;
 
     /**
-     * @param  string  $name
-     * @param  \JPNut\Pearley\Compiler\LanguageRule[]  $rules
+     * @param string                                 $name
+     * @param \JPNut\Pearley\Compiler\LanguageRule[] $rules
      */
     public function __construct(string $name, array $rules)
     {
-        $this->name  = $name;
+        $this->name = $name;
         $this->rules = $rules;
     }
 

@@ -22,12 +22,12 @@ class Keyword
     protected TokenDefinitionContract $definition;
 
     /**
-     * @param  string  $name
-     * @param  string  ...$words
+     * @param string $name
+     * @param string ...$words
      */
     public function __construct(string $name, ...$words)
     {
-        $this->name  = $name;
+        $this->name = $name;
         $this->words = $words;
     }
 
@@ -45,7 +45,8 @@ class Keyword
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
     public function getTokenDefinition(TokenDefinitionContract $definition): TokenDefinitionContract

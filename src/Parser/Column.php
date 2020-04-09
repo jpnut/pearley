@@ -43,17 +43,17 @@ class Column
     protected ?LexerStateContract $lexerState;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Grammar  $grammar
-     * @param  int  $index
+     * @param \JPNut\Pearley\Parser\Grammar $grammar
+     * @param int                           $index
      */
     public function __construct(Grammar $grammar, int $index)
     {
-        $this->grammar    = $grammar;
-        $this->index      = $index;
-        $this->states     = [];
-        $this->wants      = []; // states indexed by the non-terminal they expect
-        $this->scannable  = []; // list of states that expect a token
-        $this->completed  = []; // states that are nullable
+        $this->grammar = $grammar;
+        $this->index = $index;
+        $this->states = [];
+        $this->wants = []; // states indexed by the non-terminal they expect
+        $this->scannable = []; // list of states that expect a token
+        $this->completed = []; // states that are nullable
         $this->lexerState = null;
     }
 
@@ -74,7 +74,8 @@ class Column
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $state
+     * @param \JPNut\Pearley\Parser\State $state
+     *
      * @return \JPNut\Pearley\Parser\Column
      */
     public function pushState(State $state): self
@@ -85,8 +86,9 @@ class Column
     }
 
     /**
-     * @param  string  $index
-     * @param  \JPNut\Pearley\Parser\State|null  $state
+     * @param string                           $index
+     * @param \JPNut\Pearley\Parser\State|null $state
+     *
      * @return \JPNut\Pearley\Parser\Column
      */
     public function pushWant(string $index, ?State $state = null): self
@@ -119,7 +121,8 @@ class Column
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\LexerState|null  $lexerState
+     * @param \JPNut\Pearley\Parser\Contracts\LexerState|null $lexerState
+     *
      * @return \JPNut\Pearley\Parser\Column
      */
     public function setLexerState(?LexerStateContract $lexerState): self
@@ -171,7 +174,7 @@ class Column
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $state
+     * @param \JPNut\Pearley\Parser\State $state
      */
     protected function finish(State $state): void
     {
@@ -187,14 +190,14 @@ class Column
         // special-case nullables
         if ($state->getReference() === $this->index) {
             // make sure future predictors of this rule get completed.
-            $name                     = $state->getRule()->getName();
-            $this->completed[$name]   = isset($this->completed[$name]) ? $this->completed[$name] : [];
+            $name = $state->getRule()->getName();
+            $this->completed[$name] = isset($this->completed[$name]) ? $this->completed[$name] : [];
             $this->completed[$name][] = $state;
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      */
     public function predict(string $name): void
     {
@@ -206,8 +209,8 @@ class Column
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $left
-     * @param  \JPNut\Pearley\Parser\State  $right
+     * @param \JPNut\Pearley\Parser\State $left
+     * @param \JPNut\Pearley\Parser\State $right
      */
     public function complete(State $left, State $right): void
     {

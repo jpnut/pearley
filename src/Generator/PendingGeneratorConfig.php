@@ -27,10 +27,10 @@ class PendingGeneratorConfig
     protected string $class;
 
     /**
-     * @param  string[]|null  $indentation
-     * @param  string|null  $stub
-     * @param  string|null  $namespace
-     * @param  string|null  $class
+     * @param string[]|null $indentation
+     * @param string|null   $stub
+     * @param string|null   $namespace
+     * @param string|null   $class
      */
     public function __construct(
         ?array $indentation = null,
@@ -39,13 +39,14 @@ class PendingGeneratorConfig
         ?string $class = null
     ) {
         $this->indentation = $indentation ?? $this->defaultIndentation();
-        $this->stub        = $stub ?? $this->defaultStub();
-        $this->namespace   = $namespace ?? "";
-        $this->class       = $class ?? "Grammar";
+        $this->stub = $stub ?? $this->defaultStub();
+        $this->namespace = $namespace ?? '';
+        $this->class = $class ?? 'Grammar';
     }
 
     /**
-     * @param  array  $indentation
+     * @param array $indentation
+     *
      * @return \JPNut\Pearley\Generator\PendingGeneratorConfig
      */
     public function withIndentation(array $indentation): self
@@ -56,7 +57,8 @@ class PendingGeneratorConfig
     }
 
     /**
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return \JPNut\Pearley\Generator\PendingGeneratorConfig
      */
     public function withStub(string $stub): self
@@ -67,7 +69,8 @@ class PendingGeneratorConfig
     }
 
     /**
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return \JPNut\Pearley\Generator\PendingGeneratorConfig
      */
     public function withStringStub(string $stub): self
@@ -78,7 +81,8 @@ class PendingGeneratorConfig
     }
 
     /**
-     * @param  string  $namespace
+     * @param string $namespace
+     *
      * @return \JPNut\Pearley\Generator\PendingGeneratorConfig
      */
     public function withNamespace(string $namespace): self
@@ -89,7 +93,8 @@ class PendingGeneratorConfig
     }
 
     /**
-     * @param  string  $class
+     * @param string $class
+     *
      * @return \JPNut\Pearley\Generator\PendingGeneratorConfig
      */
     public function withClass(string $class): self
@@ -132,7 +137,8 @@ class PendingGeneratorConfig
     }
 
     /**
-     * @param  string  $filename
+     * @param string $filename
+     *
      * @return string
      */
     protected function setStubFromFile(string $filename): string

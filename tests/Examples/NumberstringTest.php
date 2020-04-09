@@ -12,8 +12,9 @@ class NumberstringTest extends TestCase
     /**
      * @test
      * @dataProvider numberstrings
-     * @param  string  $numberstring
-     * @param  int  $number
+     *
+     * @param string $numberstring
+     * @param int    $number
      */
     public function it_can_parse_numberstring(string $numberstring, int $number)
     {
@@ -29,21 +30,21 @@ class NumberstringTest extends TestCase
     {
         return [
             [
-                "one",
-                1
+                'one',
+                1,
             ],
             [
-                "twenty five",
-                25
+                'twenty five',
+                25,
             ],
             [
-                "ninety nine thousand four hundred five",
-                99405
+                'ninety nine thousand four hundred five',
+                99405,
             ],
             [
-                "nine billion eight hundred seventy six million five hundred fourty three thousand two hundred ten",
-                9876543210
-            ]
+                'nine billion eight hundred seventy six million five hundred fourty three thousand two hundred ten',
+                9876543210,
+            ],
         ];
     }
 }

@@ -10,7 +10,7 @@ class RegExp
     protected string $pattern;
 
     /**
-     * @param  string  $pattern
+     * @param string $pattern
      */
     public function __construct(string $pattern)
     {

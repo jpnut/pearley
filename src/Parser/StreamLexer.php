@@ -25,22 +25,23 @@ class StreamLexer implements LexerContract
 
     public function __construct()
     {
-        $this->lineBreaks = new LineBreaks;
+        $this->lineBreaks = new LineBreaks();
 
         $this->reset();
     }
 
     /**
-     * @param  string  $buffer
-     * @param  \JPNut\Pearley\Parser\Contracts\LexerState|null  $state
+     * @param string                                          $buffer
+     * @param \JPNut\Pearley\Parser\Contracts\LexerState|null $state
+     *
      * @return \JPNut\Pearley\Parser\StreamLexer
      */
-    public function reset(string $buffer = "", ?LexerStateContract $state = null): self
+    public function reset(string $buffer = '', ?LexerStateContract $state = null): self
     {
         $this->buffer = $buffer;
 
         $this->state = is_null($state)
-            ? new LexerState
+            ? new LexerState()
             : $state->clone();
 
         return $this;
@@ -77,11 +78,12 @@ class StreamLexer implements LexerContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\Token|null  $token
-     * @param  string  $message
+     * @param \JPNut\Pearley\Parser\Contracts\Token|null $token
+     * @param string                                     $message
+     *
      * @return string
      */
-    public function formatError(?TokenContract $token = null, string $message = "Error"): string
+    public function formatError(?TokenContract $token = null, string $message = 'Error'): string
     {
         $nextLineBreak = strpos($this->buffer, "\n", $this->getState()->getIndex());
 
@@ -90,17 +92,18 @@ class StreamLexer implements LexerContract
         }
 
         $line = substr($this->buffer, $this->getState()->getLastLineBreak(), $nextLineBreak);
-        $col  = $this->getState()->getIndex() - $this->getState()->getLastLineBreak();
+        $col = $this->getState()->getIndex() - $this->getState()->getLastLineBreak();
 
-        $message .= " at line ".$this->getState()->getLine()." col ".$col.":\n \n";
-        $message .= "  ".$line."\n";
-        $message .= "  ".join(' ', array_fill(0, $col, null))."^";
+        $message .= ' at line '.$this->getState()->getLine().' col '.$col.":\n \n";
+        $message .= '  '.$line."\n";
+        $message .= '  '.implode(' ', array_fill(0, $col, null)).'^';
 
         return $message;
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return bool
      */
     public function has(string $name): bool

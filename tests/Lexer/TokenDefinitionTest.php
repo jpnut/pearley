@@ -14,7 +14,7 @@ class TokenDefinitionTest extends TestCase
     public function it_can_set_keywords()
     {
         $definition = new TokenDefinition(
-            "token",
+            'token',
             "\w+",
             null,
             false,
@@ -29,10 +29,10 @@ class TokenDefinitionTest extends TestCase
             ]
         );
 
-        $this->assertEquals("foo", $definition->getDefinitionFromText("foo")->getName());
-        $this->assertEquals("bar", $definition->getDefinitionFromText("BAR")->getName());
-        $this->assertEquals("baz", $definition->getDefinitionFromText("baz")->getName());
-        $this->assertEquals("token", $definition->getDefinitionFromText("other")->getName());
+        $this->assertEquals('foo', $definition->getDefinitionFromText('foo')->getName());
+        $this->assertEquals('bar', $definition->getDefinitionFromText('BAR')->getName());
+        $this->assertEquals('baz', $definition->getDefinitionFromText('baz')->getName());
+        $this->assertEquals('token', $definition->getDefinitionFromText('other')->getName());
     }
 
     /**
@@ -40,11 +40,11 @@ class TokenDefinitionTest extends TestCase
      */
     public function it_throws_if_invalid_keyword_provided()
     {
-        $this->expectExceptionMessage("Invalid keyword definition: keyword must be an instance of "
-            .Keyword::class.", a string, or an array of strings.");
+        $this->expectExceptionMessage('Invalid keyword definition: keyword must be an instance of '
+            .Keyword::class.', a string, or an array of strings.');
 
         new TokenDefinition(
-            "token",
+            'token',
             "\w+",
             null,
             false,
@@ -53,7 +53,7 @@ class TokenDefinitionTest extends TestCase
             null,
             null,
             [
-                1
+                1,
             ]
         );
     }
@@ -63,10 +63,10 @@ class TokenDefinitionTest extends TestCase
      */
     public function it_throws_if_keyword_name_not_provided()
     {
-        $this->expectExceptionMessage("Invalid keyword definition: please provide a unique name for each keyword.");
+        $this->expectExceptionMessage('Invalid keyword definition: please provide a unique name for each keyword.');
 
         new TokenDefinition(
-            "token",
+            'token',
             "\w+",
             null,
             false,
@@ -88,7 +88,7 @@ class TokenDefinitionTest extends TestCase
         $this->expectExceptionMessage("Duplicate keyword definition detected for 'foo'");
 
         new TokenDefinition(
-            "token",
+            'token',
             "\w+",
             null,
             false,
@@ -111,7 +111,7 @@ class TokenDefinitionTest extends TestCase
         $this->expectExceptionMessage("Duplicate keyword detected for 'foo'");
 
         new TokenDefinition(
-            "token",
+            'token',
             "\w+",
             null,
             false,

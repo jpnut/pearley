@@ -25,7 +25,7 @@ class SubexpressionSymbol implements Symbol, HasRules
     protected ?string $serialized;
 
     /**
-     * @param  array  $rules
+     * @param array $rules
      */
     public function __construct(array $rules)
     {
@@ -33,8 +33,9 @@ class SubexpressionSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     public function serialize(CompileRule $rule, CompileResult $result): ?string
@@ -49,8 +50,9 @@ class SubexpressionSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function generateCompileRules(CompileRule $rule, CompileResult $result): array

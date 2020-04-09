@@ -12,8 +12,9 @@ class JsonTest extends TestCase
     /**
      * @test
      * @dataProvider jsons
-     * @param  string  $json
-     * @param  array  $expected
+     *
+     * @param string $json
+     * @param array  $expected
      */
     public function it_can_parse_json(string $json, array $expected)
     {
@@ -29,17 +30,17 @@ class JsonTest extends TestCase
     {
         return [
             [
-                "{\"foo\": \"bar\"}",
-                ["foo" => "bar"]
+                '{"foo": "bar"}',
+                ['foo' => 'bar'],
             ],
             [
-                json_encode(["foo" => "bar"]),
-                ["foo" => "bar"]
+                json_encode(['foo' => 'bar']),
+                ['foo' => 'bar'],
             ],
             [
-                json_encode(["foo" => [1,2,3], "bar" => ["baz" => null]]),
-                ["foo" => [1,2,3], "bar" => ["baz" => null]]
-            ]
+                json_encode(['foo' => [1, 2, 3], 'bar' => ['baz' => null]]),
+                ['foo' => [1, 2, 3], 'bar' => ['baz' => null]],
+            ],
         ];
     }
 }

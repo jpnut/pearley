@@ -41,8 +41,8 @@ class LexerConfig implements LexerConfigContract
     protected array $other_configs = [];
 
     /**
-     * @param  string  $name
-     * @param  array  $definitions
+     * @param string $name
+     * @param array  $definitions
      */
     public function __construct(string $name, array $definitions)
     {
@@ -74,7 +74,8 @@ class LexerConfig implements LexerConfigContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     *
      * @return void
      */
     public function addTokenDefinition(TokenDefinitionContract $definition): void
@@ -84,8 +85,8 @@ class LexerConfig implements LexerConfigContract
         }
 
         $this->newDefinitions[] = $name;
-        $this->names[$name]     = true;
-        $this->definitions[]    = $definition;
+        $this->names[$name] = true;
+        $this->definitions[] = $definition;
 
         if ($definition->shouldPush()) {
             $this->other_configs[$definition->getPush()] = $definition->getName();
@@ -103,8 +104,9 @@ class LexerConfig implements LexerConfigContract
     }
 
     /**
-     * @param  int  $index
-     * @param  string  $text
+     * @param int    $index
+     * @param string $text
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
     public function getTokenDefinition(int $index, string $text): TokenDefinitionContract
@@ -145,6 +147,7 @@ class LexerConfig implements LexerConfigContract
     /**
      * @param $key
      * @param $definition
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
     protected function createTokenDefinition($key, $definition): TokenDefinitionContract
@@ -180,17 +183,19 @@ class LexerConfig implements LexerConfigContract
     }
 
     /**
-     * @param  string[]  $patterns
+     * @param string[] $patterns
+     *
      * @return string
      */
     protected function regexUnion(array $patterns): string
     {
-        return '(?:'.join('|', array_map(fn(string $pattern) => "(?:{$pattern})", $patterns)).')';
+        return '(?:'.implode('|', array_map(fn (string $pattern) => "(?:{$pattern})", $patterns)).')';
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
-     * @param  string  $pattern
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     * @param string                                         $pattern
+     *
      * @return string
      */
     protected function validatePattern(TokenDefinitionContract $definition, string $pattern): string
@@ -213,12 +218,12 @@ class LexerConfig implements LexerConfigContract
             throw new Exception("Definition should declare line breaks: {$pattern}");
         }
 
-
         return "({$pattern})";
     }
 
     /**
-     * @param  string  $pattern
+     * @param string $pattern
+     *
      * @return string
      */
     protected function formatPattern(string $pattern): string
@@ -227,7 +232,8 @@ class LexerConfig implements LexerConfigContract
     }
 
     /**
-     * @param  string  $pattern
+     * @param string $pattern
+     *
      * @return int
      */
     protected function regexGroupCount(string $pattern): int

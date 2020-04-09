@@ -15,7 +15,7 @@ class MixinSymbol implements Symbol
     protected string $mixin;
 
     /**
-     * @param  string  $mixin
+     * @param string $mixin
      */
     public function __construct(string $mixin)
     {
@@ -31,8 +31,9 @@ class MixinSymbol implements Symbol
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string
      */
     public function serialize(CompileRule $rule, CompileResult $result): string
@@ -47,7 +48,8 @@ class MixinSymbol implements Symbol
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function qualifyName(string $name): string
@@ -64,16 +66,18 @@ class MixinSymbol implements Symbol
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getArgNameFromRuleName(string $name): string
     {
         if (preg_match(
-                '/(?:\$macrocall\$\d+)(?!\$macrocall\$\d+)/',
-                $name,
-                $matches, PREG_OFFSET_CAPTURE
-            ) === 0) {
+            '/(?:\$macrocall\$\d+)(?!\$macrocall\$\d+)/',
+            $name,
+            $matches,
+            PREG_OFFSET_CAPTURE
+        ) === 0) {
             throw new Exception("Could not parse rule name: expecting '\$macrocall\$\d+' but none found.");
         }
 

@@ -57,13 +57,13 @@ class State
     protected int $id;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Rule  $rule
-     * @param  int  $dot
-     * @param  int  $reference
-     * @param  \ArrayObject  $wantedBy
-     * @param  mixed  $data
-     * @param  \JPNut\Pearley\Parser\State|null  $left
-     * @param  \JPNut\Pearley\Parser\State|null  $right
+     * @param \JPNut\Pearley\Parser\Rule       $rule
+     * @param int                              $dot
+     * @param int                              $reference
+     * @param \ArrayObject                     $wantedBy
+     * @param mixed                            $data
+     * @param \JPNut\Pearley\Parser\State|null $left
+     * @param \JPNut\Pearley\Parser\State|null $right
      */
     public function __construct(
         Rule $rule,
@@ -71,16 +71,16 @@ class State
         int $reference,
         ArrayObject $wantedBy,
         $data,
-        ?State $left = null,
-        ?State $right = null
+        ?self $left = null,
+        ?self $right = null
     ) {
-        $this->rule      = $rule;
-        $this->dot       = $dot;
+        $this->rule = $rule;
+        $this->dot = $dot;
         $this->reference = $reference;
-        $this->wantedBy  = $wantedBy;
-        $this->data      = $data;
-        $this->left      = $left;
-        $this->right     = $right;
+        $this->wantedBy = $wantedBy;
+        $this->data = $data;
+        $this->left = $left;
+        $this->right = $right;
 
         $this->isComplete = $rule->isComplete($dot);
 
@@ -88,10 +88,11 @@ class State
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Rule  $rule
-     * @param  int  $dot
-     * @param  int  $reference
-     * @param  \ArrayObject  $wantedBy
+     * @param \JPNut\Pearley\Parser\Rule $rule
+     * @param int                        $dot
+     * @param int                        $reference
+     * @param \ArrayObject               $wantedBy
+     *
      * @return \JPNut\Pearley\Parser\PendingState
      */
     public static function initialise(Rule $rule, int $dot, int $reference, ArrayObject $wantedBy): PendingState
@@ -142,7 +143,7 @@ class State
     /**
      * @return \JPNut\Pearley\Parser\State|null
      */
-    public function getLeft(): ?State
+    public function getLeft(): ?self
     {
         return $this->left;
     }
@@ -150,7 +151,7 @@ class State
     /**
      * @return \JPNut\Pearley\Parser\State|null
      */
-    public function getRight(): ?State
+    public function getRight(): ?self
     {
         return $this->right;
     }
@@ -172,10 +173,11 @@ class State
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $right
+     * @param \JPNut\Pearley\Parser\State $right
+     *
      * @return \JPNut\Pearley\Parser\State
      */
-    public function nextState(State $right): State
+    public function nextState(self $right): self
     {
         $state = static::initialise($this->rule, $dot = ($this->dot + 1), $this->reference, $this->wantedBy)
             ->withLeft($this)
@@ -204,11 +206,12 @@ class State
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $node
-     * @param  \JPNut\Pearley\Parser\State  $right
+     * @param \JPNut\Pearley\Parser\State $node
+     * @param \JPNut\Pearley\Parser\State $right
+     *
      * @return array
      */
-    protected function buildData(State $node, State $right): array
+    protected function buildData(self $node, self $right): array
     {
         $children = [$right->getData()];
 

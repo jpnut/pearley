@@ -32,11 +32,11 @@ class Token implements TokenContract
     protected int $col;
 
     /**
-     * @param  string  $text
-     * @param  int  $offset
-     * @param  int  $lineBreaks
-     * @param  int  $line
-     * @param  int  $col
+     * @param string $text
+     * @param int    $offset
+     * @param int    $lineBreaks
+     * @param int    $line
+     * @param int    $col
      */
     public function __construct(
         string $text,
@@ -45,11 +45,11 @@ class Token implements TokenContract
         int $line,
         int $col
     ) {
-        $this->text       = $text;
-        $this->offset     = $offset;
+        $this->text = $text;
+        $this->offset = $offset;
         $this->lineBreaks = $lineBreaks;
-        $this->line       = $line;
-        $this->col        = $col;
+        $this->line = $line;
+        $this->col = $col;
     }
 
     /**

@@ -23,14 +23,14 @@ class ParserConfig implements ParserConfigContract
     protected bool $keepHistory;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Grammar  $grammar
-     * @param  \JPNut\Pearley\Parser\Contracts\Lexer|null  $lexer
-     * @param  bool  $keepHistory
+     * @param \JPNut\Pearley\Parser\Grammar              $grammar
+     * @param \JPNut\Pearley\Parser\Contracts\Lexer|null $lexer
+     * @param bool                                       $keepHistory
      */
     public function __construct(Grammar $grammar, ?LexerContract $lexer = null, bool $keepHistory = false)
     {
-        $this->grammar     = $grammar;
-        $this->lexer       = $lexer ?? $grammar->getLexer() ?? new StreamLexer;
+        $this->grammar = $grammar;
+        $this->lexer = $lexer ?? $grammar->getLexer() ?? new StreamLexer();
         $this->keepHistory = $keepHistory;
     }
 

@@ -12,7 +12,7 @@ class ContentComponent implements Component
     protected string $value;
 
     /**
-     * @param  string  $value
+     * @param string $value
      */
     public function __construct(string $value)
     {
