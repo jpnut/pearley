@@ -93,7 +93,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $content
+     * @param string $content
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addContent(string $content): self
@@ -104,7 +105,8 @@ class CompileResult
     }
 
     /**
-     * @param  array  $contents
+     * @param array $contents
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addContents(array $contents): self
@@ -115,8 +117,9 @@ class CompileResult
     }
 
     /**
-     * @param  array  $rules
-     * @param  string|null  $componentName
+     * @param array       $rules
+     * @param string|null $componentName
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addRules(array $rules, ?string $componentName = null): self
@@ -131,7 +134,8 @@ class CompileResult
     }
 
     /**
-     * @param  array  $configs
+     * @param array $configs
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function mergeConfigs(array $configs): self
@@ -142,8 +146,9 @@ class CompileResult
     }
 
     /**
-     * @param  string  $key
-     * @param  string  $value
+     * @param string $key
+     * @param string $value
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addConfig(string $key, string $value): self
@@ -154,7 +159,8 @@ class CompileResult
     }
 
     /**
-     * @param  array  $macros
+     * @param array $macros
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function mergeMacros(array $macros): self
@@ -165,9 +171,10 @@ class CompileResult
     }
 
     /**
-     * @param  string  $name
-     * @param  array  $args
-     * @param  array  $rules
+     * @param string $name
+     * @param array  $args
+     * @param array  $rules
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addMacro(string $name, array $args, array $rules): self
@@ -178,7 +185,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addUse(string $value): self
@@ -189,7 +197,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $start
+     * @param string $start
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function setStart(string $start): self
@@ -200,7 +209,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     public function unique(string $name): string
@@ -211,7 +221,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $macro
+     * @param string $macro
+     *
      * @return bool
      */
     public function hasMacro(string $macro): bool
@@ -220,7 +231,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $macro
+     * @param string $macro
+     *
      * @return \JPNut\Pearley\Compiler\Macro
      */
     public function getMacro(string $macro): Macro
@@ -229,8 +241,9 @@ class CompileResult
     }
 
     /**
-     * @param  string  $key
-     * @param  string  $value
+     * @param string $key
+     * @param string $value
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function addMacroMap(string $key, string $value): self
@@ -241,7 +254,8 @@ class CompileResult
     }
 
     /**
-     * @param  string  $mixin
+     * @param string $mixin
+     *
      * @return string|null
      */
     public function getMacroMap(string $mixin): ?string

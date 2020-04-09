@@ -14,13 +14,13 @@ class StringSymbolTest extends TestCase
      */
     public function it_can_serialize()
     {
-        $symbol = new StringSymbol("foo");
+        $symbol = new StringSymbol('foo');
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
         $result = new CompileResult();
 
-        $this->assertEquals("foo", $symbol->serialize($rule, $result));
+        $this->assertEquals('foo', $symbol->serialize($rule, $result));
         $this->assertTrue($symbol->shouldWrap());
     }
 
@@ -29,11 +29,11 @@ class StringSymbolTest extends TestCase
      */
     public function it_serializes_null_string_as_null()
     {
-        $symbol = new StringSymbol("null");
+        $symbol = new StringSymbol('null');
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
-        $result = new CompileResult;
+        $result = new CompileResult();
 
         $this->assertNull($symbol->serialize($rule, $result));
         $this->assertFalse($symbol->shouldWrap());

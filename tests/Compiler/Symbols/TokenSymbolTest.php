@@ -14,13 +14,13 @@ class TokenSymbolTest extends TestCase
      */
     public function it_can_serialize()
     {
-        $symbol = new TokenSymbol("foo");
+        $symbol = new TokenSymbol('foo');
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
-        $result = new CompileResult;
+        $result = new CompileResult();
 
-        $this->assertEquals("foo", $symbol->serialize($rule, $result));
+        $this->assertEquals('foo', $symbol->serialize($rule, $result));
         $this->assertTrue($symbol->shouldWrap());
     }
 
@@ -29,12 +29,12 @@ class TokenSymbolTest extends TestCase
      */
     public function it_can_serialize_with_lexer()
     {
-        $symbol = new TokenSymbol("foo");
+        $symbol = new TokenSymbol('foo');
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
-        $result = new CompileResult;
-        $result->addConfig("lexer", "lexer");
+        $result = new CompileResult();
+        $result->addConfig('lexer', 'lexer');
 
         $this->assertEquals("['value' => 'foo', 'type' => Symbol::TOKEN]", $symbol->serialize($rule, $result));
         $this->assertFalse($symbol->shouldWrap());

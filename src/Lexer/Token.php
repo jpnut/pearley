@@ -38,12 +38,12 @@ class Token implements TokenContract
     protected int $col;
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
-     * @param  string  $text
-     * @param  int  $offset
-     * @param  int  $lineBreaks
-     * @param  int  $line
-     * @param  int  $col
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     * @param string                                         $text
+     * @param int                                            $offset
+     * @param int                                            $lineBreaks
+     * @param int                                            $line
+     * @param int                                            $col
      */
     public function __construct(
         TokenDefinitionContract $definition,
@@ -54,11 +54,11 @@ class Token implements TokenContract
         int $col
     ) {
         $this->definition = $definition;
-        $this->text       = $text;
-        $this->offset     = $offset;
+        $this->text = $text;
+        $this->offset = $offset;
         $this->lineBreaks = $lineBreaks;
-        $this->line       = $line;
-        $this->col        = $col;
+        $this->line = $line;
+        $this->col = $col;
     }
 
     /**

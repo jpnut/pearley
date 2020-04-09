@@ -29,7 +29,7 @@ class Compiler
     protected Grammar $grammar;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Grammar|null  $grammar
+     * @param \JPNut\Pearley\Parser\Grammar|null $grammar
      */
     public function __construct(?Grammar $grammar = null)
     {
@@ -37,7 +37,8 @@ class Compiler
     }
 
     /**
-     * @param  string  $file
+     * @param string $file
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function parseAndCompileFromFile(string $file): CompileResult
@@ -58,8 +59,9 @@ class Compiler
     }
 
     /**
-     * @param  string  $grammar
-     * @param  string|null  $file_name
+     * @param string      $grammar
+     * @param string|null $file_name
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function parseAndCompile(string $grammar, ?string $file_name = null): CompileResult
@@ -68,17 +70,18 @@ class Compiler
     }
 
     /**
-     * @param  array  $components
-     * @param  string|null  $file_name
+     * @param array       $components
+     * @param string|null $file_name
+     *
      * @return \JPNut\Pearley\Compiler\CompileResult
      */
     public function compile(array $components, ?string $file_name = null): CompileResult
     {
-        $result = new CompileResult;
+        $result = new CompileResult();
 
         foreach ($components as $component) {
             if (!($component instanceof Component)) {
-                throw new Exception("Invalid compile component: expected instance of ".Component::class);
+                throw new Exception('Invalid compile component: expected instance of '.Component::class);
             }
 
             switch (true) {
@@ -104,7 +107,7 @@ class Compiler
                     $this->addExpression($component, $result);
                     break;
                 default:
-                    throw new Exception("Unrecognised compile component: ".get_class($component));
+                    throw new Exception('Unrecognised compile component: '.get_class($component));
             }
         }
 
@@ -112,7 +115,8 @@ class Compiler
     }
 
     /**
-     * @param  string  $grammar
+     * @param string $grammar
+     *
      * @return array
      */
     protected function parseGrammar(string $grammar): array
@@ -129,8 +133,8 @@ class Compiler
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\ContentComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\Components\ContentComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult               $result
      */
     protected function addContent(ContentComponent $component, CompileResult $result): void
     {
@@ -138,43 +142,43 @@ class Compiler
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\IncludeComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  string|null  $file_name
+     * @param \JPNut\Pearley\Compiler\Components\IncludeComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult               $result
+     * @param string|null                                         $file_name
      */
     protected function includeGrammar(IncludeComponent $component, CompileResult $result, ?string $file_name): void
     {
         $this->addGrammarFromFile(
             $result,
-            join(DIRECTORY_SEPARATOR, [
+            implode(DIRECTORY_SEPARATOR, [
                 rtrim(
                     !is_null($file_name) ? dirname($file_name) : getcwd(),
                     '\/'
                 ),
-                $component->getName()
+                $component->getName(),
             ])
         );
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\BuiltinComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\Components\BuiltinComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult               $result
      */
     protected function includeBuiltinGrammar(BuiltinComponent $component, CompileResult $result): void
     {
         $this->addGrammarFromFile(
             $result,
-            join(DIRECTORY_SEPARATOR, [
+            implode(DIRECTORY_SEPARATOR, [
                 __DIR__,
                 '../Builtin',
-                $component->getName()
+                $component->getName(),
             ])
         );
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  string  $path
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     * @param string                                $path
      */
     protected function addGrammarFromFile(CompileResult $result, string $path): void
     {
@@ -193,8 +197,8 @@ class Compiler
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\MacroComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\Components\MacroComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult             $result
      */
     protected function addMacro(MacroComponent $component, CompileResult $result): void
     {
@@ -202,8 +206,8 @@ class Compiler
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\ConfigComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\Components\ConfigComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult              $result
      */
     protected function addConfig(ConfigComponent $component, CompileResult $result): void
     {
@@ -211,8 +215,8 @@ class Compiler
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\UseComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\Components\UseComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult           $result
      */
     protected function addUse(UseComponent $component, CompileResult $result): void
     {
@@ -220,8 +224,8 @@ class Compiler
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\Components\ExpressionComponent  $component
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\Components\ExpressionComponent $component
+     * @param \JPNut\Pearley\Compiler\CompileResult                  $result
      */
     protected function addExpression(ExpressionComponent $component, CompileResult $result): void
     {

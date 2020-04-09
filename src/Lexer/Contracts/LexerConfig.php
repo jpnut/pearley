@@ -12,7 +12,8 @@ interface LexerConfig
     public function getName(): string;
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Contracts\TokenDefinition  $definition
+     * @param \JPNut\Pearley\Lexer\Contracts\TokenDefinition $definition
+     *
      * @return mixed
      */
     public function addTokenDefinition(TokenDefinition $definition);
@@ -23,8 +24,9 @@ interface LexerConfig
     public function getTokenDefinitions(): array;
 
     /**
-     * @param  int  $index
-     * @param  string  $text
+     * @param int    $index
+     * @param string $text
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
     public function getTokenDefinition(int $index, string $text): TokenDefinition;

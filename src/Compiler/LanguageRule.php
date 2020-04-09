@@ -17,18 +17,19 @@ class LanguageRule
     protected ?PostProcessor $postprocessor;
 
     /**
-     * @param  array  $symbols
-     * @param  \JPNut\Pearley\Compiler\PostProcessor|null  $postprocessor
+     * @param array                                      $symbols
+     * @param \JPNut\Pearley\Compiler\PostProcessor|null $postprocessor
      */
     public function __construct(array $symbols, ?PostProcessor $postprocessor = null)
     {
-        $this->symbols       = $symbols;
+        $this->symbols = $symbols;
         $this->postprocessor = $postprocessor;
     }
 
     /**
-     * @param  string  $ruleName
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param string                                $ruleName
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function toCompileRules(string $ruleName, CompileResult $result): array
@@ -46,9 +47,10 @@ class LanguageRule
     }
 
     /**
-     * @param  string  $ruleName
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param string                                $ruleName
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function generateCompileRules(string $ruleName, CompileRule $rule, CompileResult $result): array

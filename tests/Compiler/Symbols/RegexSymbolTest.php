@@ -15,9 +15,9 @@ class RegexSymbolTest extends TestCase
      */
     public function it_can_serialize()
     {
-        $symbol = new RegexSymbol(new RegExp("foo"));
+        $symbol = new RegexSymbol(new RegExp('foo'));
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
         $result = new CompileResult();
 

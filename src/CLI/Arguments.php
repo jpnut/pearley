@@ -42,25 +42,25 @@ class Arguments
     protected array $long_options;
 
     /**
-     * @param  string  $command
-     * @param  array  $arguments
-     * @param  array  $options
+     * @param string $command
+     * @param array  $arguments
+     * @param array  $options
      */
     public function __construct(string $command, array $arguments = [], array $options = [])
     {
-        $this->command             = $command;
+        $this->command = $command;
         $this->available_arguments = $arguments;
-        $this->available_options   = $options;
-        $this->short_options       = $this->shortOptions($options);
-        $this->long_options        = $this->longOptions($options);
-
+        $this->available_options = $options;
+        $this->short_options = $this->shortOptions($options);
+        $this->long_options = $this->longOptions($options);
     }
 
     /**
-     * @param  array  $argv
+     * @param array $argv
+     *
      * @return \JPNut\Pearley\CLI\Arguments
      */
-    public function read(array $argv): Arguments
+    public function read(array $argv): self
     {
         reset($argv);
 
@@ -130,8 +130,8 @@ class Arguments
     }
 
     /**
-     * @param  string  $key
-     * @param  string  $value
+     * @param string $key
+     * @param string $value
      */
     protected function setOption(string $key, string $value): void
     {
@@ -141,7 +141,7 @@ class Arguments
     }
 
     /**
-     * @param  string  $argument
+     * @param string $argument
      */
     protected function setArgument(string $argument): void
     {
@@ -157,7 +157,8 @@ class Arguments
     }
 
     /**
-     * @param  array  $options
+     * @param array $options
+     *
      * @return array
      */
     protected function shortOptions(array $options): array
@@ -176,7 +177,8 @@ class Arguments
     }
 
     /**
-     * @param  array  $options
+     * @param array $options
+     *
      * @return array
      */
     protected function longOptions(array $options): array

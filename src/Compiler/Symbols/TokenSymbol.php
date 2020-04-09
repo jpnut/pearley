@@ -19,7 +19,7 @@ class TokenSymbol implements Symbol
     protected bool $should_wrap = false;
 
     /**
-     * @param  string  $token
+     * @param string $token
      */
     public function __construct(string $token)
     {
@@ -35,8 +35,9 @@ class TokenSymbol implements Symbol
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     public function serialize(CompileRule $rule, CompileResult $result): ?string

@@ -32,13 +32,13 @@ class Symbol
     protected int $type;
 
     /**
-     * @param  string  $value
-     * @param  int|null  $type
+     * @param string   $value
+     * @param int|null $type
      */
     public function __construct(string $value, ?int $type = null)
     {
         $this->value = $value;
-        $this->type  = $this->parseType($type);
+        $this->type = $this->parseType($type);
     }
 
     /**
@@ -90,7 +90,8 @@ class Symbol
     }
 
     /**
-     * @param  int|null  $type
+     * @param int|null $type
+     *
      * @return int
      */
     protected function parseType(?int $type): int

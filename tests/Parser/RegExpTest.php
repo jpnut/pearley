@@ -10,9 +10,10 @@ class RegExpTest extends TestCase
     /**
      * @test
      * @dataProvider regexPatterns
-     * @param  string  $input
-     * @param  string  $pattern
-     * @param  string  $qualifiedPattern
+     *
+     * @param string $input
+     * @param string $pattern
+     * @param string $qualifiedPattern
      */
     public function it_can_trim_pattern(string $input, string $pattern, string $qualifiedPattern)
     {
@@ -29,30 +30,30 @@ class RegExpTest extends TestCase
     {
         return [
             [
-                "foo",
-                "foo",
-                "/foo/",
+                'foo',
+                'foo',
+                '/foo/',
             ],
             [
-                "/foo/",
-                "/foo/",
-                "//foo//",
+                '/foo/',
+                '/foo/',
+                '//foo//',
             ],
             [
-                "/foo",
-                "/foo",
-                "//foo/",
+                '/foo',
+                '/foo',
+                '//foo/',
             ],
             [
-                "foo/",
-                "foo/",
-                "/foo//",
+                'foo/',
+                'foo/',
+                '/foo//',
             ],
             [
                 "\/foo\/",
                 "\/foo\/",
                 "/\/foo\//",
-            ]
+            ],
         ];
     }
 }

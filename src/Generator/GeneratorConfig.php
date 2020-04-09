@@ -2,8 +2,6 @@
 
 namespace JPNut\Pearley\Generator;
 
-use Exception;
-
 class GeneratorConfig
 {
     /**
@@ -27,17 +25,17 @@ class GeneratorConfig
     protected string $class;
 
     /**
-     * @param  string[]  $indentation
-     * @param  string  $stub
-     * @param  string  $namespace
-     * @param  string  $class
+     * @param string[] $indentation
+     * @param string   $stub
+     * @param string   $namespace
+     * @param string   $class
      */
     public function __construct(array $indentation, string $stub, string $namespace, string $class)
     {
         $this->indentation = $indentation;
-        $this->stub        = $stub;
-        $this->namespace   = $namespace;
-        $this->class       = $class;
+        $this->stub = $stub;
+        $this->namespace = $namespace;
+        $this->class = $class;
     }
 
     /**
@@ -45,16 +43,17 @@ class GeneratorConfig
      */
     public static function initialise(): PendingGeneratorConfig
     {
-        return new PendingGeneratorConfig;
+        return new PendingGeneratorConfig();
     }
 
     /**
-     * @param  string  $component
+     * @param string $component
+     *
      * @return string
      */
     public function getIndentationFor(string $component): string
     {
-        return $this->indentation[$component] ?? "";
+        return $this->indentation[$component] ?? '';
     }
 
     /**

@@ -23,7 +23,7 @@ class GrammarTest extends TestCase
      */
     public function it_throws_if_rule_name_missing()
     {
-        $this->expectExceptionMessage("Rule name is required");
+        $this->expectExceptionMessage('Rule name is required');
 
         new Grammar([[]]);
     }
@@ -33,7 +33,7 @@ class GrammarTest extends TestCase
      */
     public function it_throws_if_rule_name_is_not_string()
     {
-        $this->expectExceptionMessage("Rule name must be a string");
+        $this->expectExceptionMessage('Rule name must be a string');
 
         new Grammar([['name' => 1]]);
     }
@@ -43,7 +43,7 @@ class GrammarTest extends TestCase
      */
     public function it_throws_if_symbols_is_not_array()
     {
-        $this->expectExceptionMessage("Rule symbols must be either: an array or null");
+        $this->expectExceptionMessage('Rule symbols must be either: an array or null');
 
         new Grammar([['name' => 'foo', 'symbols' => 1]]);
     }
@@ -53,7 +53,7 @@ class GrammarTest extends TestCase
      */
     public function it_throws_if_postprocess_is_not_closure()
     {
-        $this->expectExceptionMessage("Rule postprocess must be either: a closure or null");
+        $this->expectExceptionMessage('Rule postprocess must be either: a closure or null');
 
         new Grammar([['name' => 'foo', 'symbols' => [], 'postprocess' => 1]]);
     }

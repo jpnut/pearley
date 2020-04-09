@@ -16,9 +16,9 @@ class CompilerTest extends TestCase
     {
         $this->expectExceptionMessage("File 'NON_EXISTANT_FILE.txt' could not be found.");
 
-        $compiler = new Compiler;
+        $compiler = new Compiler();
 
-        $compiler->parseAndCompileFromFile("NON_EXISTANT_FILE.txt");
+        $compiler->parseAndCompileFromFile('NON_EXISTANT_FILE.txt');
     }
 
     /**
@@ -26,11 +26,11 @@ class CompilerTest extends TestCase
      */
     public function it_throws_if_invalid_compile_component_supplied()
     {
-        $this->expectExceptionMessage("Invalid compile component: expected instance of ".Component::class);
+        $this->expectExceptionMessage('Invalid compile component: expected instance of '.Component::class);
 
-        $compiler = new Compiler;
+        $compiler = new Compiler();
 
-        $compiler->compile(["foo"]);
+        $compiler->compile(['foo']);
     }
 
     /**
@@ -38,13 +38,13 @@ class CompilerTest extends TestCase
      */
     public function it_throws_if_unknown_compile_component_supplied()
     {
-        $compiler = new Compiler;
+        $compiler = new Compiler();
 
-        $component = new class implements Component {
+        $component = new class() implements Component {
             //
         };
 
-        $this->expectExceptionMessage("Unrecognised compile component: ".get_class($component));
+        $this->expectExceptionMessage('Unrecognised compile component: '.get_class($component));
 
         $compiler->compile([$component]);
     }
@@ -54,11 +54,11 @@ class CompilerTest extends TestCase
      */
     public function it_can_compile_complex_grammar()
     {
-        $compiler = new Compiler;
+        $compiler = new Compiler();
 
         $this->assertInstanceOf(
             CompileResult::class,
-            $compiler->parseAndCompileFromFile(__DIR__."/../Grammars/TestGrammar6.ne")
+            $compiler->parseAndCompileFromFile(__DIR__.'/../Grammars/TestGrammar6.ne')
         );
     }
 }

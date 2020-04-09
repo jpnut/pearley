@@ -31,18 +31,19 @@ class MacroCallSymbol implements Symbol, HasRules
     protected ?string $serialized;
 
     /**
-     * @param  string  $macro
-     * @param  array  $args
+     * @param string $macro
+     * @param array  $args
      */
     public function __construct(string $macro, array $args)
     {
         $this->macro = $macro;
-        $this->args  = $args;
+        $this->args = $args;
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     public function serialize(CompileRule $rule, CompileResult $result): ?string
@@ -65,8 +66,9 @@ class MacroCallSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Compiler\CompileRule[]
      */
     public function generateCompileRules(CompileRule $rule, CompileResult $result): array
@@ -111,8 +113,9 @@ class MacroCallSymbol implements Symbol, HasRules
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string
      */
     protected function uniqueName(CompileRule $rule, CompileResult $result): string

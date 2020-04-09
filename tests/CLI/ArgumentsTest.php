@@ -13,40 +13,40 @@ class ArgumentsTest extends TestCase
     public function it_can_parse_arguments()
     {
         $arguments = new Arguments(
-            "command",
-            ["arg1" => "Argument 1", "arg2" => "Argument 2"],
+            'command',
+            ['arg1' => 'Argument 1', 'arg2' => 'Argument 2'],
             [
-                "opt1" => [
-                    "short" => "o1",
-                    "long"  => "option1",
+                'opt1' => [
+                    'short' => 'o1',
+                    'long'  => 'option1',
                 ],
-                "opt2" => [
-                    "short" => "o2",
-                    "long"  => "option2",
+                'opt2' => [
+                    'short' => 'o2',
+                    'long'  => 'option2',
                 ],
-                "opt3" => [
-                    "short" => "o3",
-                    "long"  => "option3",
+                'opt3' => [
+                    'short' => 'o3',
+                    'long'  => 'option3',
                 ],
-                "opt4" => [
-                    "short" => "o4",
-                    "long"  => "option4",
+                'opt4' => [
+                    'short' => 'o4',
+                    'long'  => 'option4',
                 ],
             ]
         );
 
-        $arguments->read(explode(" ", "foo bar --option1 value1 -o2 value2 --option3=value3 -o4=value4"));
+        $arguments->read(explode(' ', 'foo bar --option1 value1 -o2 value2 --option3=value3 -o4=value4'));
 
         $this->assertEquals([
-            "foo",
-            "bar",
+            'foo',
+            'bar',
         ], $arguments->getArguments());
 
         $this->assertEquals([
-            "opt1" => "value1",
-            "opt2" => "value2",
-            "opt3" => "value3",
-            "opt4" => "value4",
+            'opt1' => 'value1',
+            'opt2' => 'value2',
+            'opt3' => 'value3',
+            'opt4' => 'value4',
         ], $arguments->getOptions());
     }
 
@@ -58,11 +58,11 @@ class ArgumentsTest extends TestCase
         $this->expectExceptionMessage("Expected to receive 2 argument(s) for command 'command' but received 1");
 
         $arguments = new Arguments(
-            "command",
-            ["arg1" => "Argument 1", "arg2" => "Argument 2"],
+            'command',
+            ['arg1' => 'Argument 1', 'arg2' => 'Argument 2'],
         );
 
-        $arguments->read(explode(" ", "foo"));
+        $arguments->read(explode(' ', 'foo'));
     }
 
     /**
@@ -73,10 +73,10 @@ class ArgumentsTest extends TestCase
         $this->expectExceptionMessage("Too many arguments. Expected to receive 2 argument(s) for command 'command'.");
 
         $arguments = new Arguments(
-            "command",
-            ["arg1" => "Argument 1", "arg2" => "Argument 2"],
+            'command',
+            ['arg1' => 'Argument 1', 'arg2' => 'Argument 2'],
         );
 
-        $arguments->read(explode(" ", "foo bar baz"));
+        $arguments->read(explode(' ', 'foo bar baz'));
     }
 }

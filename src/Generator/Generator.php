@@ -17,10 +17,10 @@ class Generator
     /**
      * @var string
      */
-    protected string $result = "";
+    protected string $result = '';
 
     /**
-     * @param  \JPNut\Pearley\Generator\GeneratorConfig|null  $config
+     * @param \JPNut\Pearley\Generator\GeneratorConfig|null $config
      */
     public function __construct(?GeneratorConfig $config = null)
     {
@@ -28,7 +28,8 @@ class Generator
     }
 
     /**
-     * @param  string  $file
+     * @param string $file
+     *
      * @return string
      */
     public function generateFromFile(string $file): string
@@ -37,7 +38,8 @@ class Generator
     }
 
     /**
-     * @param  string  $file
+     * @param string $file
+     *
      * @return string
      */
     protected function compileAndGenerate(string $file): string
@@ -50,11 +52,12 @@ class Generator
      */
     protected function compiler(): Compiler
     {
-        return new Compiler;
+        return new Compiler();
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string
      */
     public function generate(CompileResult $result): string
@@ -109,14 +112,15 @@ class Generator
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Generator\Generator
      */
     protected function replaceGrammarUse(CompileResult $result): self
     {
         $this->result = str_replace(
             '{{ GrammarUse }}',
-            join("\n", array_map(fn(string $use) => "use {$use};", $result->getUse())),
+            implode("\n", array_map(fn (string $use) => "use {$use};", $result->getUse())),
             $this->result
         );
 
@@ -124,8 +128,9 @@ class Generator
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  string  $indentation
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     * @param string                                $indentation
+     *
      * @return \JPNut\Pearley\Generator\Generator
      */
     protected function replaceGrammarBody(CompileResult $result, string $indentation): self
@@ -140,8 +145,9 @@ class Generator
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  string  $indentation
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     * @param string                                $indentation
+     *
      * @return \JPNut\Pearley\Generator\Generator
      */
     protected function replaceGrammarRules(CompileResult $result, string $indentation): self
@@ -149,13 +155,15 @@ class Generator
         $this->result = str_replace(
             '{{ GrammarRules }}',
             $this->serialiseRules($result->getRules(), $result, $indentation),
-            $this->result);
+            $this->result
+        );
 
         return $this;
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Generator\Generator
      */
     protected function replaceGrammarStart(CompileResult $result): self
@@ -166,7 +174,8 @@ class Generator
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return \JPNut\Pearley\Generator\Generator
      */
     protected function replaceGrammarLexer(CompileResult $result): self
@@ -189,19 +198,21 @@ class Generator
     }
 
     /**
-     * @param  array  $lines
-     * @param  string  $indentation
-     * @param  string  $prefix
+     * @param array  $lines
+     * @param string $indentation
+     * @param string $prefix
+     *
      * @return string
      */
-    protected function indentLines(array $lines, string $indentation, string $prefix = ""): string
+    protected function indentLines(array $lines, string $indentation, string $prefix = ''): string
     {
-        return join("{$prefix}\n{$indentation}", $lines);
+        return implode("{$prefix}\n{$indentation}", $lines);
     }
 
     /**
-     * @param  array  $body
-     * @param  string  $indentation
+     * @param array  $body
+     * @param string $indentation
+     *
      * @return string
      */
     protected function serialiseBody(array $body, string $indentation): string
@@ -209,37 +220,39 @@ class Generator
         return $this->indentLines(
             explode(
                 PHP_EOL,
-                join("\n\n", $body)
+                implode("\n\n", $body)
             ),
             $indentation
         );
     }
 
     /**
-     * Note that each rule is indented by 12 spaces to match the formatting of the php file
+     * Note that each rule is indented by 12 spaces to match the formatting of the php file.
      *
-     * @param  \JPNut\Pearley\Compiler\CompileRule[]  $rules
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  string  $indentation
+     * @param \JPNut\Pearley\Compiler\CompileRule[] $rules
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     * @param string                                $indentation
+     *
      * @return string
      */
     protected function serialiseRules(array $rules, CompileResult $result, string $indentation): string
     {
         return $this->indentLines(
-            array_map(fn(CompileRule $rule) => $this->serialiseRule($rule, $result), $rules),
+            array_map(fn (CompileRule $rule) => $this->serialiseRule($rule, $result), $rules),
             $indentation,
-            ","
+            ','
         );
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string
      */
     protected function serialiseRule(CompileRule $rule, CompileResult $result): string
     {
-        $ruleString = "[";
+        $ruleString = '[';
         $ruleString .= "'name' => '{$rule->getName()}', ";
         $ruleString .= "'symbols' => [{$this->serialiseSymbols($rule, $result, $rule->getSymbols())}]";
 
@@ -247,26 +260,28 @@ class Generator
             $ruleString .= ", 'postprocess' => {$value}";
         }
 
-        $ruleString .= "]";
+        $ruleString .= ']';
 
         return $ruleString;
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  array  $symbols
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     * @param array                                 $symbols
+     *
      * @return string
      */
     protected function serialiseSymbols(CompileRule $rule, CompileResult $result, array $symbols): string
     {
-        return join(', ', array_map(fn(Symbol $symbol) => $this->serialiseSymbol($rule, $result, $symbol), $symbols));
+        return implode(', ', array_map(fn (Symbol $symbol) => $this->serialiseSymbol($rule, $result, $symbol), $symbols));
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
-     * @param  \JPNut\Pearley\Compiler\Contracts\Symbol  $symbol
+     * @param \JPNut\Pearley\Compiler\CompileRule      $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult    $result
+     * @param \JPNut\Pearley\Compiler\Contracts\Symbol $symbol
+     *
      * @return string|null
      */
     protected function serialiseSymbol(CompileRule $rule, CompileResult $result, Symbol $symbol): ?string

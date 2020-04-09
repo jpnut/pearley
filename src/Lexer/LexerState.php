@@ -33,26 +33,27 @@ class LexerState implements LexerStateContract
     protected array $stack;
 
     /**
-     * @param  int  $index
-     * @param  int  $line
-     * @param  int  $col
-     * @param  string  $configName
-     * @param  array  $stack
+     * @param int    $index
+     * @param int    $line
+     * @param int    $col
+     * @param string $configName
+     * @param array  $stack
      */
     public function __construct(int $index, int $line, int $col, string $configName, array $stack)
     {
-        $this->index      = $index;
-        $this->line       = $line;
-        $this->col        = $col;
+        $this->index = $index;
+        $this->line = $line;
+        $this->col = $col;
         $this->configName = $configName;
-        $this->stack      = $stack;
+        $this->stack = $stack;
     }
 
     /**
-     * @param  string  $configName
+     * @param string $configName
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
-    public static function create(string $configName): LexerState
+    public static function create(string $configName): self
     {
         return new static(
             0,
@@ -64,10 +65,11 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  bool  $withIndex
+     * @param bool $withIndex
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
-    public function clone(bool $withIndex = false): LexerState
+    public function clone(bool $withIndex = false): self
     {
         return new static(
             $withIndex ? $this->index : 0,
@@ -87,7 +89,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  int  $amount
+     * @param int $amount
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
     protected function incrementIndex(int $amount): self
@@ -106,7 +109,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  int  $amount
+     * @param int $amount
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
     protected function incrementLine(int $amount): self
@@ -125,7 +129,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  int  $col
+     * @param int $col
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
     protected function setCol(int $col): self
@@ -144,8 +149,9 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  string  $text
-     * @param  \JPNut\Pearley\Parser\Contracts\LineBreaks  $lineBreaks
+     * @param string                                     $text
+     * @param \JPNut\Pearley\Parser\Contracts\LineBreaks $lineBreaks
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
     public function updateState(string $text, LineBreaksContract $lineBreaks): self
@@ -158,8 +164,9 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\LineBreaks  $lineBreaks
-     * @param  int  $size
+     * @param \JPNut\Pearley\Parser\Contracts\LineBreaks $lineBreaks
+     * @param int                                        $size
+     *
      * @return int
      */
     protected function calculateNewCol(LineBreaksContract $lineBreaks, int $size): int
@@ -188,7 +195,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  string|null  $configName
+     * @param string|null $configName
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
     public function setConfigName(?string $configName): self
@@ -207,7 +215,8 @@ class LexerState implements LexerStateContract
     }
 
     /**
-     * @param  string  $configName
+     * @param string $configName
+     *
      * @return \JPNut\Pearley\Lexer\LexerState
      */
     public function push(string $configName): self

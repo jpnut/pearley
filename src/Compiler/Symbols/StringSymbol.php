@@ -19,7 +19,7 @@ class StringSymbol implements Symbol
     protected bool $should_wrap = false;
 
     /**
-     * @param  string  $string
+     * @param string $string
      */
     public function __construct(string $string)
     {
@@ -35,8 +35,9 @@ class StringSymbol implements Symbol
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string|null
      */
     public function serialize(CompileRule $rule, CompileResult $result): ?string

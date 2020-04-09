@@ -31,7 +31,8 @@ class LexerTest extends TestCase
     /**
      * @test
      * @dataProvider missingConfigs
-     * @param  \JPNut\Pearley\Lexer\LexerConfig  $config
+     *
+     * @param \JPNut\Pearley\Lexer\LexerConfig $config
      */
     public function it_throws_if_missing_configs(LexerConfig $config)
     {
@@ -131,10 +132,10 @@ class LexerTest extends TestCase
             )
         );
 
-        $lexer->reset("foo 123 bar");
+        $lexer->reset('foo 123 bar');
 
         $this->assertEquals('foo', $lexer->next()->getValue());
-        $this->assertEquals(" ", $lexer->next()->getValue());
+        $this->assertEquals(' ', $lexer->next()->getValue());
         $lexer->next();
     }
 
@@ -155,7 +156,7 @@ class LexerTest extends TestCase
             )
         );
 
-        $lexer->reset("foo 123 bar");
+        $lexer->reset('foo 123 bar');
 
         $lexer->next();
 
@@ -184,31 +185,31 @@ class LexerTest extends TestCase
         $results = [
             [
                 'type'  => 'word',
-                'value' => 'ducks'
+                'value' => 'ducks',
             ],
             [
                 'type'  => 'space',
-                'value' => ' '
+                'value' => ' ',
             ],
             [
                 'type'  => 'word',
-                'value' => 'are'
+                'value' => 'are',
             ],
             [
                 'type'  => 'space',
-                'value' => ' '
+                'value' => ' ',
             ],
             [
                 'type'  => 'number',
-                'value' => '123'
+                'value' => '123',
             ],
             [
                 'type'  => 'space',
-                'value' => ' '
+                'value' => ' ',
             ],
             [
                 'type'  => 'word',
-                'value' => 'bad'
+                'value' => 'bad',
             ],
         ];
 
@@ -254,7 +255,7 @@ class LexerTest extends TestCase
                 'start',
                 [
                     'word'  => '[a-z]+',
-                    'space' => '[ ]+'
+                    'space' => '[ ]+',
                 ]
             ),
         );
@@ -320,7 +321,7 @@ class LexerTest extends TestCase
                 'start',
                 [
                     'word'  => '[a-z]+',
-                    'space' => '[ ]+'
+                    'space' => '[ ]+',
                 ]
             ),
         );
@@ -347,7 +348,7 @@ class LexerTest extends TestCase
                         ->create(),
                     TokenDefinition::initialise('open_paren', '\(')
                         ->withNext('parens')
-                        ->create()
+                        ->create(),
                 ]
             ),
             new LexerConfig(
@@ -355,7 +356,7 @@ class LexerTest extends TestCase
                 [
                     TokenDefinition::initialise('space', '[ ]+')
                         ->shouldPop()
-                        ->create()
+                        ->create(),
                 ]
             ),
             new LexerConfig(
@@ -365,7 +366,7 @@ class LexerTest extends TestCase
                         ->create(),
                     TokenDefinition::initialise('close_paren', '\)')
                         ->withNext('after_parens')
-                        ->create()
+                        ->create(),
                 ]
             ),
             new LexerConfig(
@@ -373,7 +374,7 @@ class LexerTest extends TestCase
                 [
                     TokenDefinition::initialise('space', '[ ]+')
                         ->withNext('main')
-                        ->create()
+                        ->create(),
                 ]
             ),
         );
@@ -390,9 +391,10 @@ class LexerTest extends TestCase
     /**
      * @test
      * @dataProvider keywords
-     * @param  \JPNut\Pearley\Lexer\Lexer  $lexer
-     * @param  string  $value
-     * @param  string  $type
+     *
+     * @param \JPNut\Pearley\Lexer\Lexer $lexer
+     * @param string                     $value
+     * @param string                     $type
      */
     public function it_can_handle_keywords(Lexer $lexer, string $value, string $type)
     {
@@ -413,7 +415,7 @@ class LexerTest extends TestCase
                 [
                     'word' => '[a-z]+',
                     TokenDefinition::initialise('space', '[ ]+')
-                        ->withValueMap(fn() => " space ")
+                        ->withValueMap(fn () => ' space ')
                         ->create(),
                 ]
             ),
@@ -421,9 +423,9 @@ class LexerTest extends TestCase
 
         $lexer->reset('hello world');
 
-        $this->assertEquals("hello", $lexer->next()->getValue());
-        $this->assertEquals(" space ", $lexer->next()->getValue());
-        $this->assertEquals("world", $lexer->next()->getValue());
+        $this->assertEquals('hello', $lexer->next()->getValue());
+        $this->assertEquals(' space ', $lexer->next()->getValue());
+        $this->assertEquals('world', $lexer->next()->getValue());
     }
 
     /**
@@ -438,9 +440,9 @@ class LexerTest extends TestCase
                     [
                         TokenDefinition::initialise('thing1', '=')
                             ->withNext('missing')
-                            ->create()
+                            ->create(),
                     ]
-                )
+                ),
             ],
             [
                 new LexerConfig(
@@ -448,10 +450,10 @@ class LexerTest extends TestCase
                     [
                         TokenDefinition::initialise('thing1', '=')
                             ->shouldPushTo('missing')
-                            ->create()
+                            ->create(),
                     ]
-                )
-            ]
+                ),
+            ],
         ];
     }
 
@@ -474,43 +476,43 @@ class LexerTest extends TestCase
             )
         );
 
-        $lexer->reset("foo bar baz other");
+        $lexer->reset('foo bar baz other');
 
         return [
             [
                 $lexer,
-                "foo",
-                "foo",
+                'foo',
+                'foo',
             ],
             [
                 $lexer,
-                " ",
-                "ws",
+                ' ',
+                'ws',
             ],
             [
                 $lexer,
-                "bar",
-                "bar",
+                'bar',
+                'bar',
             ],
             [
                 $lexer,
-                " ",
-                "ws",
+                ' ',
+                'ws',
             ],
             [
                 $lexer,
-                "baz",
-                "baz",
+                'baz',
+                'baz',
             ],
             [
                 $lexer,
-                " ",
-                "ws",
+                ' ',
+                'ws',
             ],
             [
                 $lexer,
-                "other",
-                "word",
+                'other',
+                'word',
             ],
         ];
     }

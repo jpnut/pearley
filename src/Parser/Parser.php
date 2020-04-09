@@ -34,11 +34,11 @@ class Parser
     protected ?Contracts\LexerState $lexerState;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\ParserConfig  $config
+     * @param \JPNut\Pearley\Parser\Contracts\ParserConfig $config
      */
     public function __construct(ParserConfigContract $config)
     {
-        $this->config     = $config;
+        $this->config = $config;
         $this->lexerState = null;
 
         $this->initialise();
@@ -47,7 +47,7 @@ class Parser
     protected function initialise()
     {
         // Setup a table
-        $column      = new Column($grammar = $this->config->getGrammar(), 0);
+        $column = new Column($grammar = $this->config->getGrammar(), 0);
         $this->table = [$column];
 
         $column->pushWant($start = $grammar->getStart());
@@ -58,7 +58,8 @@ class Parser
     }
 
     /**
-     * @param  string  $chunk
+     * @param string $chunk
+     *
      * @return \JPNut\Pearley\Parser\Parser
      */
     public function feed(string $chunk): self
@@ -68,7 +69,7 @@ class Parser
         $column = null;
 
         while ($token = $this->config->getLexer()->next()) {
-            $column    = $this->table[$this->current];
+            $column = $this->table[$this->current];
             $scannable = $column->getScannable();
 
             // GC unused states
@@ -80,7 +81,7 @@ class Parser
             $this->table[] = $nextColumn = new Column($this->config->getGrammar(), $index = $this->current + 1);
 
             for ($w = count($scannable); $w--;) {
-                $state  = $scannable[$w];
+                $state = $scannable[$w];
                 $symbol = $state->getRule()->getSymbol($state->getDot());
 
                 if (is_null($symbol)) {
@@ -138,19 +139,19 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\Token  $token
+     * @param \JPNut\Pearley\Parser\Contracts\Token $token
      */
     protected function reportError(TokenContract $token)
     {
         $lines = [];
 
-        $tokenDisplay = (!is_null($type = $token->getType()) ? "{$type} token: " : "").json_encode($token->getValue());
+        $tokenDisplay = (!is_null($type = $token->getType()) ? "{$type} token: " : '').json_encode($token->getValue());
 
-        $lines[] = $this->config->getLexer()->formatError($token, "Syntax error");
+        $lines[] = $this->config->getLexer()->formatError($token, 'Syntax error');
         $lines[] = "Unexpected {$tokenDisplay}. Instead, I was expecting to see one of the following:\n";
 
         $lastColumnIndex = count($this->table) - 2;
-        $lastColumn      = $this->table[$lastColumnIndex];
+        $lastColumn = $this->table[$lastColumnIndex];
         $expectantStates = array_filter($lastColumn->getStates(), function (State $state) {
             if (!$nextSymbol = $state->getRule()->getSymbol($state->getDot())) {
                 return false;
@@ -166,24 +167,25 @@ class Parser
 
         // Display each state that is expecting a terminal symbol next.
         foreach ($stateStacks as $stateStack) {
-            $state         = reset($stateStack);
+            $state = reset($stateStack);
             $symbolDisplay = $this->getSymbolDisplay($state->getRule()->getSymbol($state->getDot()));
-            $lines[]       = "A {$symbolDisplay} based on:";
+            $lines[] = "A {$symbolDisplay} based on:";
             $this->displayStateStack($stateStack, $lines);
         }
 
-        $lines[] = "";
+        $lines[] = '';
 
-        throw new Exception(join("\n", $lines));
+        throw new Exception(implode("\n", $lines));
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State[]  $states
+     * @param \JPNut\Pearley\Parser\State[] $states
+     *
      * @return \JPNut\Pearley\Parser\State[][]
      */
     protected function buildStateStack(array $states): array
     {
-        return array_map(fn(State $state) => $this->buildFirstStateStack($state, []), $states);
+        return array_map(fn (State $state) => $this->buildFirstStateStack($state, []), $states);
     }
 
     /**
@@ -193,8 +195,8 @@ class Parser
     {
         // Return the possible parsings
         $considerations = [];
-        $start          = $this->config->getGrammar()->getStart();
-        $column         = $this->table[count($this->table) - 1];
+        $start = $this->config->getGrammar()->getStart();
+        $column = $this->table[count($this->table) - 1];
 
         foreach ($column->getStates() as $state) {
             if ($state->getRule()->getName() === $start
@@ -213,7 +215,8 @@ class Parser
     }
 
     /**
-     * @param  int  $index
+     * @param int $index
+     *
      * @return \JPNut\Pearley\Parser\Parser
      */
     public function rewind(int $index): self
@@ -229,12 +232,13 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Column  $column
+     * @param \JPNut\Pearley\Parser\Column $column
+     *
      * @return \JPNut\Pearley\Parser\Parser
      */
     public function restore(Column $column): self
     {
-        $this->current       = ($index = $column->getIndex());
+        $this->current = ($index = $column->getIndex());
         $this->table[$index] = $column;
         array_splice($this->table, $index + 1);
         $this->lexerState = $column->getLexerState();
@@ -265,8 +269,9 @@ class Parser
      * This function needs to be given a starting state and an empty array representing
      * the visited states, and it returns a single state stack.
      *
-     * @param  \JPNut\Pearley\Parser\State  $state
-     * @param  \JPNut\Pearley\Parser\State[]  $visited
+     * @param \JPNut\Pearley\Parser\State   $state
+     * @param \JPNut\Pearley\Parser\State[] $visited
+     *
      * @return \JPNut\Pearley\Parser\State[]
      */
     protected function buildFirstStateStack(State $state, array $visited): array
@@ -289,7 +294,8 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $state
+     * @param \JPNut\Pearley\Parser\State $state
+     *
      * @return \JPNut\Pearley\Parser\State[]
      */
     protected function buildInitialStateStack(State $state): array
@@ -298,13 +304,14 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Symbol|null  $symbol
+     * @param \JPNut\Pearley\Parser\Symbol|null $symbol
+     *
      * @return string
      */
     protected function getSymbolDisplay(?Symbol $symbol): string
     {
         if (is_null($symbol)) {
-            throw new Exception("Cannot display symbol: no symbol found");
+            throw new Exception('Cannot display symbol: no symbol found');
         }
 
         if ($symbol->isNonterminal()) {
@@ -327,8 +334,8 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State[]  $stateStack
-     * @param  array  $lines
+     * @param \JPNut\Pearley\Parser\State[] $stateStack
+     * @param array                         $lines
      */
     protected function displayStateStack(array $stateStack, array &$lines)
     {
@@ -356,8 +363,9 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Symbol  $symbol
+     * @param \JPNut\Pearley\Parser\Symbol $symbol
      * @param $value
+     *
      * @return bool
      */
     protected function performRegexTest(Symbol $symbol, $value): bool
@@ -366,11 +374,12 @@ class Parser
             return false;
         }
 
-        return !!(preg_match((new RegExp($symbol->getValue()))->getQualifiedPattern(), $value));
+        return (bool) (preg_match((new RegExp($symbol->getValue()))->getQualifiedPattern(), $value));
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\LexerState|null  $state
+     * @param \JPNut\Pearley\Parser\Contracts\LexerState|null $state
+     *
      * @return \JPNut\Pearley\Parser\Parser
      */
     protected function setLexerState(?Contracts\LexerState $state): self
@@ -413,8 +422,9 @@ class Parser
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\Contracts\Token  $token
-     * @param  \JPNut\Pearley\Parser\Symbol  $symbol
+     * @param \JPNut\Pearley\Parser\Contracts\Token $token
+     * @param \JPNut\Pearley\Parser\Symbol          $symbol
+     *
      * @return bool
      */
     protected function validTokenForSymbol(TokenContract $token, Symbol $symbol): bool

@@ -15,12 +15,12 @@ class Macro
     protected array $rules;
 
     /**
-     * @param  array  $args
-     * @param  \JPNut\Pearley\Compiler\LanguageRule[]  $rules
+     * @param array                                  $args
+     * @param \JPNut\Pearley\Compiler\LanguageRule[] $rules
      */
     public function __construct(array $args, array $rules)
     {
-        $this->args  = $args;
+        $this->args = $args;
         $this->rules = $rules;
     }
 

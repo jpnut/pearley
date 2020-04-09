@@ -12,9 +12,9 @@ class CompilerResultTest extends TestCase
      */
     public function it_generates_unique_rule_name()
     {
-        $result = new CompileResult;
+        $result = new CompileResult();
 
-        $this->assertEquals("foo\$1", $result->unique("foo"));
-        $this->assertEquals("foo\$2", $result->unique("foo"));
+        $this->assertEquals('foo$1', $result->unique('foo'));
+        $this->assertEquals('foo$2', $result->unique('foo'));
     }
 }

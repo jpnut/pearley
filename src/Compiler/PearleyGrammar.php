@@ -35,14 +35,14 @@ class PearleyGrammar
 
     public static function grammar()
     {
-        $id = fn($x) => $x[0] ?? null;
+        $id = fn ($x) => $x[0] ?? null;
 
         $insensitive = function ($s) {
             $result = [];
             $length = strlen($s);
 
             for ($i = 0; $i < $length; $i++) {
-                $c     = $s[$i];
+                $c = $s[$i];
                 $upper = strtoupper($c);
                 $lower = strtolower($c);
 
@@ -57,50 +57,50 @@ class PearleyGrammar
                 new LanguageRule(
                     $result,
                     PostProcessor::builtin(PostProcessor::JOINER),
-                )
+                ),
             ]);
         };
 
-        $getValue = fn($d) => $d[0]->getValue();
+        $getValue = fn ($d) => $d[0]->getValue();
 
         return new Grammar([
             [
                 'name'        => 'final$ebnf$1',
                 'symbols'     => [['value' => 'ws', 'type' => Symbol::TOKEN]],
-                'postprocess' => $id
+                'postprocess' => $id,
             ],
             [
                 'name'        => 'final$ebnf$1',
                 'symbols'     => [],
-                'postprocess' => fn() => null,
+                'postprocess' => fn () => null,
             ],
             [
                 'name'        => 'final',
                 'symbols'     => ['_', 'prog', '_', 'final$ebnf$1'],
                 'postprocess' => function ($d) {
                     return $d[1];
-                }
+                },
             ],
             [
                 'name'        => 'prog',
                 'symbols'     => ['prod'],
                 'postprocess' => function ($d) {
                     return [$d[0]];
-                }
+                },
             ],
             [
                 'name'        => 'prog',
                 'symbols'     => ['prod', 'ws', 'prog'],
                 'postprocess' => function ($d) {
                     return array_merge([$d[0]], $d[2]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
                 'symbols'     => ['word', '_', ['value' => 'arrow', 'type' => Symbol::TOKEN], '_', 'expression+'],
                 'postprocess' => function ($d) {
                     return new ExpressionComponent($d[0], $d[4]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
@@ -112,50 +112,50 @@ class PearleyGrammar
                     '_',
                     ['value' => 'arrow', 'type' => Symbol::TOKEN],
                     '_',
-                    'expression+'
+                    'expression+',
                 ],
                 'postprocess' => function ($d) {
                     return new MacroComponent($d[0], $d[2], $d[7]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
                 'symbols'     => [['value' => '@', 'type' => Symbol::LITERAL], '_', 'php'],
                 'postprocess' => function ($d) {
                     return new ContentComponent($d[2]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
                 'symbols'     => [['value' => '@', 'type' => Symbol::LITERAL], 'word', 'ws', 'word'],
                 'postprocess' => function ($d) {
                     return new ConfigComponent($d[1], $d[3]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
                 'symbols'     => [['value' => '@include', 'type' => Symbol::LITERAL], '_', 'string'],
                 'postprocess' => function ($d) {
                     return new IncludeComponent($d[2]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
                 'symbols'     => [['value' => '@builtin', 'type' => Symbol::LITERAL], '_', 'string'],
                 'postprocess' => function ($d) {
                     return new BuiltinComponent($d[2]);
-                }
+                },
             ],
             [
                 'name'        => 'prod',
                 'symbols'     => [['value' => '@use', 'type' => Symbol::LITERAL], '_', 'string'],
                 'postprocess' => function ($d) {
                     return new UseComponent($d[2]);
-                }
+                },
             ],
             [
                 'name'    => 'expression+',
-                'symbols' => ['completeexpression']
+                'symbols' => ['completeexpression'],
             ],
             [
                 'name'        => 'expression+',
@@ -164,15 +164,15 @@ class PearleyGrammar
                     '_',
                     ['value' => '|', 'type' => Symbol::LITERAL],
                     '_',
-                    'completeexpression'
+                    'completeexpression',
                 ],
                 'postprocess' => function ($d) {
                     return [...$d[0], $d[4]];
-                }
+                },
             ],
             [
                 'name'    => 'expressionlist',
-                'symbols' => ['completeexpression']
+                'symbols' => ['completeexpression'],
             ],
             [
                 'name'        => 'expressionlist',
@@ -181,50 +181,50 @@ class PearleyGrammar
                     '_',
                     ['value' => ',', 'type' => Symbol::LITERAL],
                     '_',
-                    'completeexpression'
+                    'completeexpression',
                 ],
                 'postprocess' => function ($d) {
                     return [...$d[0], $d[4]];
-                }
+                },
             ],
             [
                 'name'    => 'wordlist',
-                'symbols' => ['word']
+                'symbols' => ['word'],
             ],
             [
                 'name'        => 'wordlist',
                 'symbols'     => ['wordlist', '_', ['value' => ',', 'type' => Symbol::LITERAL], '_', 'word'],
                 'postprocess' => function ($d) {
                     return [...$d[0], $d[4]];
-                }
+                },
             ],
             [
                 'name'        => 'completeexpression',
                 'symbols'     => ['expr'],
                 'postprocess' => function ($d) {
                     return new LanguageRule($d[0]);
-                }
+                },
             ],
             [
                 'name'        => 'completeexpression',
                 'symbols'     => ['expr', '_', 'php'],
                 'postprocess' => function ($d) {
                     return new LanguageRule($d[0], new PostProcessor($d[2]));
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
                 'symbols'     => ['word'],
                 'postprocess' => function ($d) {
                     return new StringSymbol($d[0]);
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
                 'symbols'     => [['value' => '$', 'type' => Symbol::LITERAL], 'word'],
                 'postprocess' => function ($d) {
                     return new MixinSymbol($d[1]);
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
@@ -232,23 +232,23 @@ class PearleyGrammar
                     'word',
                     ['value' => '[', 'type' => Symbol::LITERAL],
                     'expressionlist',
-                    ['value' => ']', 'type' => Symbol::LITERAL]
+                    ['value' => ']', 'type' => Symbol::LITERAL],
                 ],
                 'postprocess' => function ($d) {
                     return new MacroCallSymbol($d[0], $d[2]);
-                }
+                },
             ],
             [
                 'name'        => 'expr_member$ebnf$1',
                 'symbols'     => [['value' => 'i', 'type' => Symbol::LITERAL]],
-                'postprocess' => $id
+                'postprocess' => $id,
             ],
             [
                 'name'        => 'expr_member$ebnf$1',
                 'symbols'     => [],
                 'postprocess' => function () {
                     return null;
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
@@ -257,19 +257,19 @@ class PearleyGrammar
                     return is_null($d[1])
                         ? new LiteralSymbol($d[0])
                         : $insensitive($d[0]);
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
                 'symbols'     => [['value' => '%', 'type' => Symbol::LITERAL], 'word'],
                 'postprocess' => function ($d) {
                     return new TokenSymbol($d[1]);
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
                 'symbols'     => ['charclass'],
-                'postprocess' => $id
+                'postprocess' => $id,
             ],
             [
                 'name'        => 'expr_member',
@@ -278,107 +278,107 @@ class PearleyGrammar
                     '_',
                     'expression+',
                     '_',
-                    ['value' => ')', 'type' => Symbol::LITERAL]
+                    ['value' => ')', 'type' => Symbol::LITERAL],
                 ],
                 'postprocess' => function ($d) {
                     return new SubexpressionSymbol($d[2]);
-                }
+                },
             ],
             [
                 'name'        => 'expr_member',
                 'symbols'     => ['expr_member', '_', 'ebnf_modifier'],
                 'postprocess' => function ($d) {
                     return new EBNFSymbol($d[2], $d[0]);
-                }
+                },
             ],
             [
                 'name'        => 'ebnf_modifier',
                 'symbols'     => [['value' => ':+', 'type' => Symbol::LITERAL]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'        => 'ebnf_modifier',
                 'symbols'     => [['value' => ':*', 'type' => Symbol::LITERAL]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'        => 'ebnf_modifier',
                 'symbols'     => [['value' => ':?', 'type' => Symbol::LITERAL]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'    => 'expr',
-                'symbols' => ['expr_member']
+                'symbols' => ['expr_member'],
             ],
             [
                 'name'        => 'expr',
                 'symbols'     => ['expr', 'ws', 'expr_member'],
                 'postprocess' => function ($d) {
                     return [...$d[0], $d[2]];
-                }
+                },
             ],
             [
                 'name'        => 'word',
                 'symbols'     => [['value' => 'word', 'type' => Symbol::TOKEN]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'        => 'string',
                 'symbols'     => [['value' => 'string', 'type' => Symbol::TOKEN]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'        => 'string',
                 'symbols'     => [['value' => 'btstring', 'type' => Symbol::TOKEN]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'        => 'charclass',
                 'symbols'     => [['value' => 'charclass', 'type' => Symbol::TOKEN]],
                 'postprocess' => function ($d) {
                     return new RegexSymbol($d[0]->getValue());
-                }
+                },
             ],
             [
                 'name'        => 'php',
                 'symbols'     => [['value' => 'php', 'type' => Symbol::TOKEN]],
-                'postprocess' => $getValue
+                'postprocess' => $getValue,
             ],
             [
                 'name'        => '_$ebnf$1',
                 'symbols'     => ['ws'],
-                'postprocess' => $id
+                'postprocess' => $id,
             ],
             [
                 'name'        => '_$ebnf$1',
                 'symbols'     => [],
                 'postprocess' => function () {
                     return null;
-                }
+                },
             ],
             [
                 'name'    => '_',
-                'symbols' => ['_$ebnf$1']
+                'symbols' => ['_$ebnf$1'],
             ],
             [
                 'name'    => 'ws',
-                'symbols' => [['value' => 'ws', 'type' => Symbol::TOKEN]]
+                'symbols' => [['value' => 'ws', 'type' => Symbol::TOKEN]],
             ],
             [
                 'name'        => 'ws$ebnf$1',
                 'symbols'     => [['value' => 'ws', 'type' => Symbol::TOKEN]],
-                'postprocess' => $id
+                'postprocess' => $id,
             ],
             [
                 'name'        => 'ws$ebnf$1',
                 'symbols'     => [],
                 'postprocess' => function () {
                     return null;
-                }
+                },
             ],
             [
                 'name'    => 'ws',
-                'symbols' => ['ws$ebnf$1', ['value' => 'comment', 'type' => Symbol::TOKEN], '_']
+                'symbols' => ['ws$ebnf$1', ['value' => 'comment', 'type' => Symbol::TOKEN], '_'],
             ],
         ], 'final', static::lexer());
     }
@@ -392,7 +392,7 @@ class PearleyGrammar
                     $rules = static::nearleyRules(),
                     [
                         TokenDefinition::initialise('charclass', '\.|\[(?:\\\.|[^\\\n])+?\]')
-                            ->withValueMap(fn(string $text) => new RegExp($text))
+                            ->withValueMap(fn (string $text) => new RegExp($text))
                             ->create(),
                     ]
                 )
@@ -411,7 +411,6 @@ class PearleyGrammar
         );
     }
 
-
     protected static function nearleyRules()
     {
         return array_merge([
@@ -424,19 +423,23 @@ class PearleyGrammar
                 ->withNext('main')
                 ->create(),
             TokenDefinition::initialise('php', '\{\%(?:[^%]|\%[^}])*\%\}')
-                ->withValueMap(fn(string $text) => substr($text, 2, -2))
+                ->withValueMap(fn (string $text) => substr($text, 2, -2))
                 ->create(),
             TokenDefinition::initialise('word', '[\w\?\+]+')
                 ->withNext('afterWord')
                 ->create(),
             TokenDefinition::initialise('string', '"(?:[^\\"\n]|\\["\\/bfnrt]|\\u[a-fA-F0-9]{4})*"')
-                ->withValueMap(fn(string $text) => preg_replace(
-                    '/(\")((?:[^\"\n]|\\["\\/bfnrt]|u[a-fA-F0-9]{4})*)(\")/', '$2', $text)
+                ->withValueMap(
+                    fn (string $text) => preg_replace(
+                    '/(\")((?:[^\"\n]|\\["\\/bfnrt]|u[a-fA-F0-9]{4})*)(\")/',
+                    '$2',
+                    $text
+                )
                 )
                 ->withNext('main')
                 ->create(),
             TokenDefinition::initialise('btstring', '\`[^`]*\`')
-                ->withValueMap(fn(string $text) => substr($text, 1, -1))
+                ->withValueMap(fn (string $text) => substr($text, 1, -1))
                 ->withNext('main')
                 ->create(),
 
@@ -446,20 +449,20 @@ class PearleyGrammar
     protected static function nearleyLiterals()
     {
         $tokens = [
-            ","        => '\,',
-            "|"        => "\|",
-            "$"        => "\\$",
-            "%"        => "\%",
-            "("        => "\(",
-            ")"        => "\)",
-            ":?"       => "\:\?",
-            ":*"       => "\:\*",
-            ":+"       => "\:\+",
-            "@include" => "\@include",
-            "@builtin" => "\@builtin",
-            "@use"     => "\@use",
-            "@"        => "\@",
-            "]"        => "\]",
+            ','        => '\,',
+            '|'        => "\|",
+            '$'        => '\$',
+            '%'        => "\%",
+            '('        => "\(",
+            ')'        => "\)",
+            ':?'       => "\:\?",
+            ':*'       => "\:\*",
+            ':+'       => "\:\+",
+            '@include' => "\@include",
+            '@builtin' => "\@builtin",
+            '@use'     => "\@use",
+            '@'        => "\@",
+            ']'        => "\]",
         ];
 
         $literals = [];

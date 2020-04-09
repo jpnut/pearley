@@ -15,7 +15,7 @@ class RegexSymbol implements Symbol
     protected RegExp $regexp;
 
     /**
-     * @param  \JPNut\Pearley\Parser\RegExp  $regexp
+     * @param \JPNut\Pearley\Parser\RegExp $regexp
      */
     public function __construct(RegExp $regexp)
     {
@@ -31,8 +31,9 @@ class RegexSymbol implements Symbol
     }
 
     /**
-     * @param  \JPNut\Pearley\Compiler\CompileRule  $rule
-     * @param  \JPNut\Pearley\Compiler\CompileResult  $result
+     * @param \JPNut\Pearley\Compiler\CompileRule   $rule
+     * @param \JPNut\Pearley\Compiler\CompileResult $result
+     *
      * @return string
      */
     public function serialize(CompileRule $rule, CompileResult $result): string

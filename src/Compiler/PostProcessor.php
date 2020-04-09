@@ -8,17 +8,17 @@ class PostProcessor
 {
     protected const BUILTIN = [
         self::JOINER    => "function (\$d) { return join('', \$d); }",
-        self::ARRCONCAT => "function (\$d) { return [\$d[0], ...\$d[1]]; }",
-        self::ARRPUSH   => "function (\$d) {return [...\$d[0], \$d[1]]; }",
-        self::NULLER    => "function (\$d) { return null; }",
-        self::ID        => "\$id",
+        self::ARRCONCAT => 'function ($d) { return [$d[0], ...$d[1]]; }',
+        self::ARRPUSH   => 'function ($d) {return [...$d[0], $d[1]]; }',
+        self::NULLER    => 'function ($d) { return null; }',
+        self::ID        => '$id',
     ];
 
-    public const JOINER    = "joiner";
-    public const ARRCONCAT = "arrconcat";
-    public const ARRPUSH   = "arrpush";
-    public const NULLER    = "nuller";
-    public const ID        = "id";
+    public const JOINER = 'joiner';
+    public const ARRCONCAT = 'arrconcat';
+    public const ARRPUSH = 'arrpush';
+    public const NULLER = 'nuller';
+    public const ID = 'id';
 
     /**
      * @var string|null
@@ -26,7 +26,7 @@ class PostProcessor
     protected ?string $value;
 
     /**
-     * @param  string|null  $value
+     * @param string|null $value
      */
     public function __construct(?string $value)
     {
@@ -42,7 +42,8 @@ class PostProcessor
     }
 
     /**
-     * @param  string  $builtin
+     * @param string $builtin
+     *
      * @return \JPNut\Pearley\Compiler\PostProcessor
      */
     public static function builtin(string $builtin): self

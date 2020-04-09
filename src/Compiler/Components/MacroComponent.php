@@ -22,14 +22,14 @@ class MacroComponent implements Component
     protected array $rules;
 
     /**
-     * @param  string  $name
-     * @param  array  $args
-     * @param  array  $rules
+     * @param string $name
+     * @param array  $args
+     * @param array  $rules
      */
     public function __construct(string $name, array $args, array $rules)
     {
-        $this->name  = $name;
-        $this->args  = $args;
+        $this->name = $name;
+        $this->args = $args;
         $this->rules = $rules;
     }
 

@@ -2,8 +2,8 @@
 
 namespace JPNut\Pearley\Lexer;
 
-use JPNut\Pearley\Parser\Contracts\LexerRegex as LexerRegexContract;
 use InvalidArgumentException;
+use JPNut\Pearley\Parser\Contracts\LexerRegex as LexerRegexContract;
 
 class LexerRegex implements LexerRegexContract
 {
@@ -18,11 +18,11 @@ class LexerRegex implements LexerRegexContract
     protected int $lastIndex;
 
     /**
-     * @param  string  $pattern
+     * @param string $pattern
      */
     public function __construct(string $pattern)
     {
-        $this->pattern   = $pattern;
+        $this->pattern = $pattern;
         $this->lastIndex = 0;
     }
 
@@ -35,7 +35,8 @@ class LexerRegex implements LexerRegexContract
     }
 
     /**
-     * @param  int  $index
+     * @param int $index
+     *
      * @return \JPNut\Pearley\Parser\Contracts\LexerRegex
      */
     public function setLastIndex(int $index): LexerRegexContract
@@ -46,8 +47,9 @@ class LexerRegex implements LexerRegexContract
     }
 
     /**
-     * @param  string  $input
-     * @param  mixed  ...$flags
+     * @param string $input
+     * @param mixed  ...$flags
+     *
      * @return array
      */
     public function match(string $input, ...$flags): array
@@ -66,7 +68,8 @@ class LexerRegex implements LexerRegexContract
     }
 
     /**
-     * @param  string  $input
+     * @param string $input
+     *
      * @return string
      */
     protected function input(string $input): string

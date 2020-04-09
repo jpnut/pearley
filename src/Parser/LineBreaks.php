@@ -24,12 +24,12 @@ class LineBreaks implements LineBreaksContract
     protected LexerRegex $regex;
 
     /**
-     * @param  int  $total
-     * @param  int  $lastBreakIndex
+     * @param int $total
+     * @param int $lastBreakIndex
      */
     public function __construct(int $total = 0, int $lastBreakIndex = 0)
     {
-        $this->total          = $total;
+        $this->total = $total;
         $this->lastBreakIndex = $lastBreakIndex;
     }
 
@@ -50,10 +50,11 @@ class LineBreaks implements LineBreaksContract
     }
 
     /**
-     * @param  string  $text
+     * @param string $text
+     *
      * @return \JPNut\Pearley\Parser\LineBreaks
      */
-    public function calculate(string $text): LineBreaks
+    public function calculate(string $text): self
     {
         $this->reset();
 
@@ -76,7 +77,7 @@ class LineBreaks implements LineBreaksContract
     /**
      * @return \JPNut\Pearley\Parser\LineBreaks
      */
-    public function default(): LineBreaks
+    public function default(): self
     {
         return $this->reset()->clone();
     }
@@ -92,7 +93,7 @@ class LineBreaks implements LineBreaksContract
     /**
      * @return \JPNut\Pearley\Parser\LineBreaks
      */
-    protected function clone(): LineBreaks
+    protected function clone(): self
     {
         return new static($this->total, $this->lastBreakIndex);
     }
@@ -100,7 +101,7 @@ class LineBreaks implements LineBreaksContract
     /**
      * @return \JPNut\Pearley\Parser\LineBreaks
      */
-    protected function cloneAndReset(): LineBreaks
+    protected function cloneAndReset(): self
     {
         $clone = $this->clone();
 
@@ -114,7 +115,7 @@ class LineBreaks implements LineBreaksContract
      */
     protected function reset(): self
     {
-        $this->total          = 0;
+        $this->total = 0;
         $this->lastBreakIndex = 0;
 
         return $this;

@@ -57,8 +57,9 @@ interface TokenDefinition
     public function getNext(): ?string;
 
     /**
-     * @param  string  $text
+     * @param string $text
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
-    public function getDefinitionFromText(string $text): TokenDefinition;
+    public function getDefinitionFromText(string $text): self;
 }

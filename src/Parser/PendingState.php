@@ -42,22 +42,23 @@ class PendingState
     protected ?State $right = null;
 
     /**
-     * @param  \JPNut\Pearley\Parser\Rule  $rule
-     * @param  int  $dot
-     * @param  int  $reference
-     * @param  \ArrayObject  $wantedBy
+     * @param \JPNut\Pearley\Parser\Rule $rule
+     * @param int                        $dot
+     * @param int                        $reference
+     * @param \ArrayObject               $wantedBy
      */
     public function __construct(Rule $rule, int $dot, int $reference, ArrayObject $wantedBy)
     {
-        $this->rule      = $rule;
-        $this->dot       = $dot;
+        $this->rule = $rule;
+        $this->dot = $dot;
         $this->reference = $reference;
-        $this->wantedBy  = $wantedBy;
-        $this->data      = [];
+        $this->wantedBy = $wantedBy;
+        $this->data = [];
     }
 
     /**
-     * @param  mixed  $data
+     * @param mixed $data
+     *
      * @return \JPNut\Pearley\Parser\PendingState
      */
     public function withData($data): self
@@ -68,7 +69,8 @@ class PendingState
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $state
+     * @param \JPNut\Pearley\Parser\State $state
+     *
      * @return \JPNut\Pearley\Parser\PendingState
      */
     public function withLeft(State $state): self
@@ -79,7 +81,8 @@ class PendingState
     }
 
     /**
-     * @param  \JPNut\Pearley\Parser\State  $state
+     * @param \JPNut\Pearley\Parser\State $state
+     *
      * @return \JPNut\Pearley\Parser\PendingState
      */
     public function withRight(State $state): self

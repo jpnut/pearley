@@ -63,17 +63,16 @@ class TokenDefinition implements TokenDefinitionContract
      */
     protected array $keywordHashMap;
 
-
     /**
-     * @param  string  $name
-     * @param  string|null  $pattern
-     * @param  \Closure|null  $valueMap
-     * @param  bool  $hasLineBreaks
-     * @param  bool  $throw
-     * @param  bool  $pop
-     * @param  string|null  $push
-     * @param  string|null  $next
-     * @param  array  $keywords
+     * @param string        $name
+     * @param string|null   $pattern
+     * @param \Closure|null $valueMap
+     * @param bool          $hasLineBreaks
+     * @param bool          $throw
+     * @param bool          $pop
+     * @param string|null   $push
+     * @param string|null   $next
+     * @param array         $keywords
      */
     public function __construct(
         string $name,
@@ -86,21 +85,22 @@ class TokenDefinition implements TokenDefinitionContract
         ?string $next,
         array $keywords
     ) {
-        $this->name          = $name;
-        $this->pattern       = $pattern;
-        $this->valueMap      = $valueMap;
+        $this->name = $name;
+        $this->pattern = $pattern;
+        $this->valueMap = $valueMap;
         $this->hasLineBreaks = $hasLineBreaks;
-        $this->throw         = $throw;
-        $this->pop           = $pop;
-        $this->push          = $push;
-        $this->next          = $next;
+        $this->throw = $throw;
+        $this->pop = $pop;
+        $this->push = $push;
+        $this->next = $next;
 
         $this->setKeywords($keywords);
     }
 
     /**
-     * @param  string  $name
-     * @param  string|null  $pattern
+     * @param string      $name
+     * @param string|null $pattern
+     *
      * @return \JPNut\Pearley\Lexer\PendingTokenDefinition
      */
     public static function initialise(string $name, ?string $pattern = null): PendingTokenDefinition
@@ -189,7 +189,8 @@ class TokenDefinition implements TokenDefinitionContract
     }
 
     /**
-     * @param  string  $text
+     * @param string $text
+     *
      * @return \JPNut\Pearley\Lexer\Contracts\TokenDefinition
      */
     public function getDefinitionFromText(string $text): TokenDefinitionContract
@@ -210,7 +211,8 @@ class TokenDefinition implements TokenDefinitionContract
     }
 
     /**
-     * @param  array  $keywords
+     * @param array $keywords
+     *
      * @return void
      */
     protected function setKeywords(array $keywords): void
@@ -230,14 +232,14 @@ class TokenDefinition implements TokenDefinitionContract
 
             if (!is_string($keyword) && !is_array($keyword)) {
                 throw new InvalidArgumentException(
-                    "Invalid keyword definition: keyword must be an instance of "
-                    .Keyword::class.", a string, or an array of strings."
+                    'Invalid keyword definition: keyword must be an instance of '
+                    .Keyword::class.', a string, or an array of strings.'
                 );
             }
 
             if (!is_string($index)) {
                 throw new InvalidArgumentException(
-                    "Invalid keyword definition: please provide a unique name for each keyword."
+                    'Invalid keyword definition: please provide a unique name for each keyword.'
                 );
             }
 
@@ -246,7 +248,7 @@ class TokenDefinition implements TokenDefinitionContract
     }
 
     /**
-     * @param  \JPNut\Pearley\Lexer\Keyword  $keyword
+     * @param \JPNut\Pearley\Lexer\Keyword $keyword
      */
     protected function addKeyword(Keyword $keyword): void
     {

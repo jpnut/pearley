@@ -18,11 +18,11 @@ class SubexpressionSymbolTest extends TestCase
     {
         $symbol = new SubexpressionSymbol([new LanguageRule([])]);
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
-        $result = new CompileResult;
+        $result = new CompileResult();
 
-        $this->assertEquals("bar\$subexpression\$1", $symbol->serialize($rule, $result));
+        $this->assertEquals('bar$subexpression$1', $symbol->serialize($rule, $result));
         $this->assertTrue($symbol->shouldWrap());
     }
 
@@ -33,12 +33,12 @@ class SubexpressionSymbolTest extends TestCase
     {
         $symbol = new SubexpressionSymbol([new LanguageRule([])]);
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
-        $result = new CompileResult;
+        $result = new CompileResult();
 
-        $this->assertEquals("bar\$subexpression\$1", $symbol->serialize($rule, $result));
-        $this->assertEquals("bar\$subexpression\$1", $symbol->serialize($rule, $result));
+        $this->assertEquals('bar$subexpression$1', $symbol->serialize($rule, $result));
+        $this->assertEquals('bar$subexpression$1', $symbol->serialize($rule, $result));
     }
 
     /**
@@ -46,15 +46,15 @@ class SubexpressionSymbolTest extends TestCase
      */
     public function it_can_generate_compile_rules()
     {
-        $symbol = new SubexpressionSymbol([new LanguageRule([$string = new StringSymbol("foo")])]);
+        $symbol = new SubexpressionSymbol([new LanguageRule([$string = new StringSymbol('foo')])]);
 
-        $rule = new CompileRule("bar", []);
+        $rule = new CompileRule('bar', []);
 
-        $result = new CompileResult;
+        $result = new CompileResult();
 
         $rules = $symbol->generateCompileRules($rule, $result);
 
-        $this->assertEquals("bar\$subexpression\$1", $rules[0]->getName());
+        $this->assertEquals('bar$subexpression$1', $rules[0]->getName());
         $this->assertCount(1, $rules[0]->getSymbols());
         $this->assertSame($string, $rules[0]->getSymbols()[0]);
         $this->assertNull($rules[0]->getPostprocess());

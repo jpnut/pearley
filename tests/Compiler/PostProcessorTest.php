@@ -14,6 +14,6 @@ class PostProcessorTest extends TestCase
     {
         $this->expectExceptionMessage("Builtin function 'foo' not recognised.");
 
-        PostProcessor::builtin("foo");
+        PostProcessor::builtin('foo');
     }
 }
